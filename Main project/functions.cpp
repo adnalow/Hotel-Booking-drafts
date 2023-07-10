@@ -236,9 +236,49 @@ void db3(){
 
   }
 
+  struct Node {
+    string noInd;
+    string name;
+    string noBed;
+    string stayTime;
+    Node* next;
+};
+
+Node* head = NULL;
+
+void InsertNode(string noInd, string name, string noBed, string stayTime) {
+    Node* n = new Node();
+    n->noInd = noInd;
+    n->name = name;
+    n->noBed = noBed;
+    n->stayTime = stayTime;
+    n->next = head;
+    head = n;
+}
+
+void displayList() {
+    Node* curr = head;
+    while (curr != NULL) {
+        cout << "No. Of individuals: " << curr->noInd << endl;
+        cout << "Name of the booker: " << curr->name << endl;
+        cout << "NO. of bed to be use: " << curr->noBed << endl;
+        cout << "Staying time: " << curr->stayTime << endl;
+
+        int x = std::stoi(curr->stayTime);
+        int cost = x/2;
+        cout<<"Total cost: "<<cost<<endl;
+
+        cout << endl;
+        curr = curr->next;
+    }
+}
+
+
   void db4(){
     string noInd,name, noBed, stayTime;
     if(opt2 == "Regular" || opt2 == "regular"){
+        bool flag=true;
+        do{
          system("cls");
          std::cout<<R"(
                                                                     ||==============================||     
@@ -273,16 +313,26 @@ void db3(){
     
         )"<<std::endl;
        
-        std::cout<<"                                                 No. of individuals that will use the room: ";
-        std::cin>>noInd;
-        std::cout<<"                                                 Name of the booker: ";
-        std::cin>>name;
-        std::cout<<"                                                 How many beds to be use? ";
-        std::cin>>noBed;
-        std::cout<<"                                                 How many hrs to stay? ";
-        std::cin>>stayTime;
+        for(int i=0; i<limit;i++){
+            system("cls");
+            std::cout<<"                                                 No. of individuals that will use the room: ";
+            std::cin>>noInd;
+            std::cout<<"                                                 Name of the booker: ";
+            std::cin>>name;
+            std::cout<<"                                                 How many beds to be use? ";
+            std::cin>>noBed;
+            std::cout<<"                                                 How many hrs to stay? ";
+            std::cin>>stayTime;
+
+            InsertNode(noInd, name, noBed, stayTime);
+       }
+            flag = false;
+            continue;
+        }while(flag == true);
 
     }else if(opt2 == "Advance" || opt2 == "advance"){
+        bool flag=true;
+        do{
          system("cls");
          std::cout<<R"(
                                                                     ||==============================||     
@@ -316,17 +366,29 @@ void db3(){
 
     
         )"<<std::endl;
+
+       for(int i=0; i<limit;i++){
+            std::cout<<"                                                 No. of individuals that will use the room: ";
+            std::cin>>noInd;
+            std::cout<<"                                                 Name of the booker: ";
+            std::cin>>name;
+            std::cout<<"                                                 How many beds to be use? ";
+            std::cin>>noBed;
+            std::cout<<"                                                 How many hrs to stay? ";
+            std::cin>>stayTime;
+
+            InsertNode(noInd, name, noBed, stayTime);
+       }
+       flag = false;
+       continue;
        
-        std::cout<<"                                                 No. of individuals that will use the room: ";
-        std::cin>>noInd;
-        std::cout<<"                                                 Name of the booker: ";
-        std::cin>>name;
-        std::cout<<"                                                 How many beds to be use? ";
-        std::cin>>noBed;
-        std::cout<<"                                                 How many hrs to stay? ";
-        std::cin>>stayTime;
+       }while(flag==true);
+
+    
 
     }else if(opt2 == "Premium" || opt2 == "Premium"){
+        bool flag=true;
+         do{
          system("cls");
          std::cout<<R"(
                                                                     ||==============================||     
@@ -360,15 +422,22 @@ void db3(){
 
     
         )"<<std::endl;
-       
-        std::cout<<"                                                 No. of individuals that will use the room: ";
-        std::cin>>noInd;
-        std::cout<<"                                                 Name of the booker: ";
-        std::cin>>name;
-        std::cout<<"                                                 How many beds to be use? ";
-        std::cin>>noBed;
-        std::cout<<"                                                 How many hrs to stay? ";
-        std::cin>>stayTime;
+       for(int i=0; i<limit;i++){
+            std::cout<<"                                                 No. of individuals that will use the room: ";
+            std::cin>>noInd;
+            std::cout<<"                                                 Name of the booker: ";
+            std::cin>>name;
+            std::cout<<"                                                 How many beds to be use? ";
+            std::cin>>noBed;
+            std::cout<<"                                                 How many hrs to stay? ";
+            std::cin>>stayTime;
+
+            InsertNode(noInd, name, noBed, stayTime);
+       }
+       flag = false;
+       continue;
+
+         }while(flag==true);
     }
     
 
@@ -384,5 +453,8 @@ void doBooking(){
     db3();
     system("cls");
     db4();
+    system("cls");
+    displayList();
+
 
 }
