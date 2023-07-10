@@ -6,6 +6,8 @@ char opt1;
 char opt2;
 
 void db1(){
+
+    do{
     std::cout<<R"(
 
 
@@ -26,6 +28,7 @@ void db1(){
     cout<<"                                                                                     Enter your answer: ";
     cin>>opt1;
 
+}
 }
 
 void db2(){
@@ -65,12 +68,13 @@ std::cout<<R"(
         
 
     )"<<std::endl;
-    cout<<"                                                     Enter your answer[1]Regular, [2]Advance, [3]Premium: ";
+    cout<<"                                                     Enter your answer ;Regular, Advance, Premium: ";
     cin>>opt2;
 }
 
 void db3(){
-    if(opt2 == '1'){
+    
+    if(opt2 == 'Regular' || opt2 == 'regular'){
         char c;
         bool flag=false;
         do{
@@ -122,10 +126,115 @@ void db3(){
         }
         }while(flag==false);
 
-    }
+    }else if(opt2 == 'Advance' || opt2 == 'advance'){
+        char c;
+        bool flag=false;
+        do{
+         system("cls");
+         std::cout<<R"(
+                                                                    ||==============================||     
+                                                                    ||                              ||     
+                                                                    ||          Regular             ||     
+                                                                    ||                              ||     
+                                                                    ||==============================||     
+                                                                    ||                              ||     
+                                                                    ||                              ||      
+                                                                    ||                              ||     
+                                                                    ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     
+                                                                    ||                              ||     
+                                                                    ||                              ||       
+                                                                    ||                              ||     
+                                                                    ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     
+                                                                    ||                              ||     
+                                                                    ||                              ||        
+                                                                    ||                              ||     
+                                                                    ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     
+                                                                    ||                              ||     
+                                                                    ||                              ||        
+                                                                    ||                              ||     
+                                                                    ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     
+                                                                    ||                              ||     
+                                                                    ||                              ||      
+                                                                    ||                              ||     
+                                                                    ||==============================||     
 
-}
+                                                                                cost: 350/hr                          
+                                                                                ++++++++++++                           
 
+    
+        )"<<std::endl;
+       
+        cout<<"                                                 Is this the room category that you want?[Y][N]";
+        cin>>c;
+        if(c == 'y' || c == 'Y'){
+            flag = true;
+            continue;
+        } else if(c == 'N' || c == 'n'){
+            system("cls");
+            db2();
+        } else {
+            cout << "Invalid Choice!";
+            flag = false;
+        }
+            }while(flag==false);
+
+    }else if(opt2 == 'Premium' || opt2 == 'Premium'){
+        char c;
+        bool flag=false;
+        do{
+         system("cls");
+         std::cout<<R"(
+                                                                    ||==============================||     
+                                                                    ||                              ||     
+                                                                    ||          Regular             ||     
+                                                                    ||                              ||     
+                                                                    ||==============================||     
+                                                                    ||                              ||     
+                                                                    ||                              ||      
+                                                                    ||                              ||     
+                                                                    ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     
+                                                                    ||                              ||     
+                                                                    ||                              ||       
+                                                                    ||                              ||     
+                                                                    ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     
+                                                                    ||                              ||     
+                                                                    ||                              ||        
+                                                                    ||                              ||     
+                                                                    ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     
+                                                                    ||                              ||     
+                                                                    ||                              ||        
+                                                                    ||                              ||     
+                                                                    ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     
+                                                                    ||                              ||     
+                                                                    ||                              ||      
+                                                                    ||                              ||     
+                                                                    ||==============================||     
+
+                                                                                cost: 350/hr                          
+                                                                                ++++++++++++                           
+
+    
+        )"<<std::endl;
+       
+        cout<<"                                                 Is this the room category that you want?[Y][N]";
+        cin>>c;
+        if(c == 'y' || c == 'Y'){
+            flag = true;
+            continue;
+        } else if(c == 'N' || c == 'n'){
+            system("cls");
+            db2();
+        } else {
+            cout << "Invalid Choice!";
+            flag = false;
+        }
+            }while(flag==false);
+    }else {
+            cout<< "Invalid Choice!";
+        }
+
+
+  }
 
 
    // std::cout<<R"(
