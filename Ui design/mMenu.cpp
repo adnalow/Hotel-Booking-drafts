@@ -41,19 +41,8 @@ void mMenu(){
                                                                                                                         ##   [6]Exit the Program     ##
                                                                                                                         ##                           ##
                                                                                                                         %%===========================%%                                                                                                    
-                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                           
-                    
-    
-
+            
              )"<<endl;
-
-
-
-
-
-
-
 
     }
 
@@ -61,7 +50,7 @@ int main(){
     string opt;
 
     mMenu();
-    cout<<"                                                                                                                     Your answer: ";
+    cout<<"                                                                                                               Your answer: ";
     cin>>opt;
 
 }
