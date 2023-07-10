@@ -236,6 +236,16 @@ void db3(){
 
   }
 
+  void roomPanels(){
+
+                    cout<<"\\\\\\\\\\\\\\";
+                    cout<<"\\          \\";
+                    cout<<"\\";cout<<"1";cout<<"\\";
+                    cout<<"\\          \\";
+                    cout<<"\\\\\\\\\\\\\\";  
+
+  }
+
   struct Node {
     string noInd;
     string name;
