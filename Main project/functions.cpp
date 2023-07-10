@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 
+
 char opt1;
 char opt2;
 
@@ -64,8 +65,76 @@ std::cout<<R"(
         
 
     )"<<std::endl;
+    cout<<"                                                     Enter your answer[1]Regular, [2]Advance, [3]Premium: ";
     cin>>opt2;
 }
+
+void db3(){
+    if(opt2 == '1'){
+        char c;
+        bool flag=false;
+        do{
+         system("cls");
+         std::cout<<R"(
+                                                                    ||==============================||     
+                                                                    ||                              ||     
+                                                                    ||          Regular             ||     
+                                                                    ||                              ||     
+                                                                    ||==============================||     
+                                                                    ||                              ||     
+                                                                    ||                              ||      
+                                                                    ||                              ||     
+                                                                    ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     
+                                                                    ||                              ||     
+                                                                    ||                              ||       
+                                                                    ||                              ||     
+                                                                    ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     
+                                                                    ||                              ||     
+                                                                    ||                              ||        
+                                                                    ||                              ||     
+                                                                    ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     
+                                                                    ||                              ||     
+                                                                    ||                              ||        
+                                                                    ||                              ||     
+                                                                    ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     
+                                                                    ||                              ||     
+                                                                    ||                              ||      
+                                                                    ||                              ||     
+                                                                    ||==============================||     
+
+                                                                                cost: 350/hr                          
+                                                                                ++++++++++++                           
+
+    
+        )"<<std::endl;
+       
+        cout<<"                                                 Is this the room category that you want?[Y][N]";
+        cin>>c;
+        if(c == 'y' || c == 'Y'){
+            flag = true;
+            continue;
+        } else if(c == 'N' || c == 'n'){
+            system("cls");
+            db2();
+        } else {
+            cout << "Invalid Choice!";
+            flag = false;
+        }
+        }while(flag==false);
+
+    }
+
+}
+
+
+
+   // std::cout<<R"(
+                                                        
+
+
+
+    
+   // )"<<std::endl;
 
 
 void doBooking(){
@@ -73,7 +142,7 @@ void doBooking(){
     db1();
     system("cls");
     db2();
-
-
+    system("cls");
+    db3();
 
 }
