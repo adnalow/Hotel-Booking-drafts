@@ -4,6 +4,8 @@ using namespace std;
 
 int limit;
 string opt2;
+int roomChoice;
+
 
 void db1(){
 
@@ -236,15 +238,116 @@ void db3(){
 
   }
 
-  void roomPanels(){
 
-                    cout<<"\\\\\\\\\\\\\\";
-                    cout<<"\\          \\";
-                    cout<<"\\";cout<<"1";cout<<"\\";
-                    cout<<"\\          \\";
-                    cout<<"\\\\\\\\\\\\\\";  
 
-  }
+  void roomPanelReg(){
+    bool flag=true;
+    do{
+
+    std::cout<<R"(
+                                    
+                        .______       _______   _______  __    __   __          ___      .______      
+                        |   _  \     |   ____| /  _____||  |  |  | |  |        /   \     |   _  \     
+                        |  |_)  |    |  |__   |  |  __  |  |  |  | |  |       /  ^  \    |  |_)  |    
+                        |      /     |   __|  |  | |_ | |  |  |  | |  |      /  /_\  \   |      /     
+                        |  |\  \----.|  |____ |  |__| | |  `--'  | |  `----./  _____  \  |  |\  \----.
+                        | _| `._____||_______| \______|  \______/  |_______/__/     \__\ | _| `._____|
+                                                                              
+                    ==============    ==============    ==============    ==============    ==============             
+                    ||          ||    ||          ||    ||          ||    ||          ||    ||          ||
+                    ||    1     ||    ||    2     ||    ||    3     ||    ||    4     ||    ||    5     ||
+                    ||          ||    ||          ||    ||          ||    ||          ||    ||          ||
+                    ==============    ==============    ==============    ==============    ==============
+                    
+
+                    ==============    ==============    ==============    ==============    ==============
+                    ||          ||    ||          ||    ||          ||    ||          ||    ||          ||
+                    ||    6     ||    ||    7     ||    ||    8     ||    ||    9     ||    ||    10    ||
+                    ||          ||    ||          ||    ||          ||    ||          ||    ||          ||
+                    ==============    ==============    ==============    ==============    ==============
+
+
+
+    )"<<std::endl;
+
+    std::cout<<"                                                 Insert the room that you want to claim: ";
+    std::cin>>roomChoice;
+    flag=false;
+    continue;
+    }while(flag==true);
+}
+
+void roomPanelAdv(){
+
+    std::cout<<R"(
+                                               
+                                               
+
+                        ___       _______  ____    ____  ___      .__   __.   ______  _______ 
+                        /   \     |       \ \   \  /   / /   \     |  \ |  |  /      ||   ____|
+                        /  ^  \    |  .--.  | \   \/   / /  ^  \    |   \|  | |  ,----'|  |__   
+                        /  /_\  \   |  |  |  |  \      / /  /_\  \   |  . `  | |  |     |   __|  
+                        /  _____  \  |  '--'  |   \    / /  _____  \  |  |\   | |  `----.|  |____ 
+                        /__/     \__\ |_______/     \__/ /__/     \__\ |__| \__|  \______||_______|
+                                                                                                                
+                    ==============    ==============    ==============    ==============    ==============             
+                    ||          ||    ||          ||    ||          ||    ||          ||    ||          ||
+                    ||    1     ||    ||    2     ||    ||    3     ||    ||    4     ||    ||    5     ||
+                    ||          ||    ||          ||    ||          ||    ||          ||    ||          ||
+                    ==============    ==============    ==============    ==============    ==============
+                    
+
+                    ==============    ==============    ==============    ==============    ==============
+                    ||          ||    ||          ||    ||          ||    ||          ||    ||          ||
+                    ||    6     ||    ||    7     ||    ||    8     ||    ||    9     ||    ||    10    ||
+                    ||          ||    ||          ||    ||          ||    ||          ||    ||          ||
+                    ==============    ==============    ==============    ==============    ==============
+
+
+
+    )"<<std::endl;
+
+    std::cout<<"                                                 Insert the room that you want to claim: ";
+    std::cin>>roomChoice;
+}
+
+void roomPanelPrem(){
+
+    std::cout<<R"(
+
+
+
+                            .______   .______       _______ .___  ___.  __   __    __  .___  ___. 
+                            |   _  \  |   _  \     |   ____||   \/   | |  | |  |  |  | |   \/   | 
+                            |  |_)  | |  |_)  |    |  |__   |  \  /  | |  | |  |  |  | |  \  /  | 
+                            |   ___/  |      /     |   __|  |  |\/|  | |  | |  |  |  | |  |\/|  | 
+                            |  |      |  |\  \----.|  |____ |  |  |  | |  | |  `--'  | |  |  |  | 
+                            | _|      | _| `._____||_______||__|  |__| |__|  \______/  |__|  |__| 
+                                                                                                            
+                    ==============    ==============    ==============    ==============    ==============             
+                    ||          ||    ||          ||    ||          ||    ||          ||    ||          ||
+                    ||    1     ||    ||    2     ||    ||    3     ||    ||    4     ||    ||    5     ||
+                    ||          ||    ||          ||    ||          ||    ||          ||    ||          ||
+                    ==============    ==============    ==============    ==============    ==============
+                    
+
+                    ==============    ==============    ==============    ==============    ==============
+                    ||          ||    ||          ||    ||          ||    ||          ||    ||          ||
+                    ||    6     ||    ||    7     ||    ||    8     ||    ||    9     ||    ||    10    ||
+                    ||          ||    ||          ||    ||          ||    ||          ||    ||          ||
+                    ==============    ==============    ==============    ==============    ==============
+
+
+
+    )"<<std::endl;
+
+    std::cout<<"                                                 Insert the room that you want to claim: ";
+    std::cin>>roomChoice;
+}
+
+
+
+
 
   struct Node {
     string noInd;
@@ -269,10 +372,10 @@ void InsertNode(string noInd, string name, string noBed, string stayTime) {
 void displayList() {
     Node* curr = head;
     while (curr != NULL) {
-        cout << "No. Of individuals: " << curr->noInd << endl;
-        cout << "Name of the booker: " << curr->name << endl;
-        cout << "NO. of bed to be use: " << curr->noBed << endl;
-        cout << "Staying time: " << curr->stayTime << endl;
+        cout << "\n\n\n\nNo. Of individuals: " << curr->noInd << endl;
+        cout << "\n\n\n\nName of the booker: " << curr->name << endl;
+        cout << "\n\n\n\nNO. of bed to be use: " << curr->noBed << endl;
+        cout << "\n\n\n\nStaying time: " << curr->stayTime << endl;
 
         int x = std::stoi(curr->stayTime);
         int cost = x/2;
@@ -281,6 +384,39 @@ void displayList() {
         cout << endl;
         curr = curr->next;
     }
+}
+
+void storeItemsToArray(std::string* items, int size) {
+    Node* curr = head;
+    int index = 0;
+
+    while (curr != nullptr && index < size) {
+        // Store the desired data from the node into the array
+        items[index] = curr->name;
+        curr = curr->next;
+        index++;
+    }
+
+}
+
+void receipt(){
+
+    std::cout<<R"(
+
+
+                                                 ██████╗ ███████╗ ██████╗███████╗██╗██████╗ ████████╗
+                                                ██╔══██╗██╔════╝██╔════╝██╔════╝██║██╔══██╗╚══██╔══╝
+                                                ██████╔╝█████╗  ██║     █████╗  ██║██████╔╝   ██║   
+                                                ██╔══██╗██╔══╝  ██║     ██╔══╝  ██║██╔═══╝    ██║   
+                                                ██║  ██║███████╗╚██████╗███████╗██║██║        ██║   
+                                                ╚═╝  ╚═╝╚══════╝ ╚═════╝╚══════╝╚═╝╚═╝        ╚═╝ 
+
+    )"<<std::endl;
+    displayList();
+    cout<<"\n\n\n\nPress any key to continue....";
+    cin.get();
+
+
 }
 
 
@@ -463,8 +599,20 @@ void doBooking(){
     db3();
     system("cls");
     db4();
+    bool flag=true;
+    do{
     system("cls");
-    displayList();
+    if(opt2 == "Regular" || opt2 == "regular"){
+        roomPanelReg();
+    }else if(opt2 == "Advance" || opt2 == "advance"){
+        roomPanelAdv();
+    }else if((opt2 == "Premium" || opt2 == "premium")){
+        roomPanelPrem();
+    }
+    }while(flag=true);
+    system("cls");
+    receipt();
+
 
 
 }
