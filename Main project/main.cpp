@@ -29,6 +29,9 @@ int main(){
     switch(opt){
         case '1':
             doBooking();
+            mMenu();
+            cout<<"                                                                                                               Your answer: ";
+            cin>>opt;
             break;
         case '2':
             break;

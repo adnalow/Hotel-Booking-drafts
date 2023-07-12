@@ -4,7 +4,7 @@ using namespace std;
 
 int limit;
 string opt2;
-int roomChoice;
+string roomChoice;
 
 
 void db1(){
@@ -38,34 +38,34 @@ void db1(){
 void db2(){
 std::cout<<R"(
 
-                                                        ||==============================||     ||==============================||
-                                                        ||                              ||     ||                              ||
-                                                        ||          Regular             ||     ||          Advance             ||
-                                                        ||                              ||     ||                              ||
-                                                        ||==============================||     ||==============================||
-                                                        ||                              ||     ||                              ||
-                                                        ||                              ||     ||                              || 
-                                                        ||                              ||     ||                              ||
-                                                        ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||
-                                                        ||                              ||     ||                              ||
-                                                        ||                              ||     ||                              ||  
-                                                        ||                              ||     ||                              ||
-                                                        ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||
-                                                        ||                              ||     ||                              ||
-                                                        ||                              ||     ||                              ||   
-                                                        ||                              ||     ||                              ||
-                                                        ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||
-                                                        ||                              ||     ||                              ||
-                                                        ||                              ||     ||                              ||   
-                                                        ||                              ||     ||                              ||
-                                                        ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||
-                                                        ||                              ||     ||                              ||
-                                                        ||                              ||     ||                              || 
-                                                        ||                              ||     ||                              ||
-                                                        ||==============================||     ||==============================||
+                                                        ||==============================||     ||==============================||      ||==============================||     
+                                                        ||                              ||     ||                              ||      ||                              ||
+                                                        ||          Regular             ||     ||          Advance             ||      ||          Premium             ||
+                                                        ||                              ||     ||                              ||      ||                              ||
+                                                        ||==============================||     ||==============================||      ||==============================||
+                                                        ||                              ||     ||                              ||      ||                              ||
+                                                        ||                              ||     ||                              ||      ||                              || 
+                                                        ||                              ||     ||                              ||      ||                              ||
+                                                        ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||      ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||
+                                                        ||                              ||     ||                              ||      ||                              ||
+                                                        ||                              ||     ||                              ||      ||                              ||  
+                                                        ||                              ||     ||                              ||      ||                              ||
+                                                        ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||      ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||
+                                                        ||                              ||     ||                              ||      ||                              ||
+                                                        ||                              ||     ||                              ||      ||                              ||
+                                                        ||                              ||     ||                              ||      ||                              ||
+                                                        ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||      ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||
+                                                        ||                              ||     ||                              ||      ||                              ||
+                                                        ||                              ||     ||                              ||      ||                              ||  
+                                                        ||                              ||     ||                              ||      ||                              ||
+                                                        ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||     ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||      ||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\||
+                                                        ||                              ||     ||                              ||      ||                              ||
+                                                        ||                              ||     ||                              ||      ||                              || 
+                                                        ||                              ||     ||                              ||      ||                              ||
+                                                        ||==============================||     ||==============================||      ||==============================||
 
-                                                                    cost: 350/hr                          cost: 350/hr
-                                                                    ++++++++++++                          ++++++++++++                                                                                                                                                  
+                                                                    cost: 350/hr                          cost: 350/hr                            cost: 350/hr    
+                                                                    ++++++++++++                          ++++++++++++                            ++++++++++++                                                                                                                                         
 
                                                                                                                         
         
@@ -241,9 +241,9 @@ void db3(){
 
 
   void roomPanelReg(){
+    system("cls");
     bool flag=true;
     do{
-
     std::cout<<R"(
                                     
                         .______       _______   _______  __    __   __          ___      .______      
@@ -278,7 +278,9 @@ void db3(){
 }
 
 void roomPanelAdv(){
-
+    system("cls");
+    bool flag=true;
+    do{
     std::cout<<R"(
                                                
                                                
@@ -309,10 +311,16 @@ void roomPanelAdv(){
 
     std::cout<<"                                                 Insert the room that you want to claim: ";
     std::cin>>roomChoice;
+    flag=false;
+    continue;
+    }while(flag==true);
+    
 }
 
 void roomPanelPrem(){
-
+    system("cls");
+    bool flag=true;
+    do{
     std::cout<<R"(
 
 
@@ -343,6 +351,9 @@ void roomPanelPrem(){
 
     std::cout<<"                                                 Insert the room that you want to claim: ";
     std::cin>>roomChoice;
+    flag=false;
+    continue;
+    }while(flag==true);
 }
 
 
@@ -354,17 +365,19 @@ void roomPanelPrem(){
     string name;
     string noBed;
     string stayTime;
+    string roomChoice;
     Node* next;
 };
 
 Node* head = NULL;
 
-void InsertNode(string noInd, string name, string noBed, string stayTime) {
+void InsertNode(string noInd, string name, string noBed, string stayTime, string roomChoice) {
     Node* n = new Node();
     n->noInd = noInd;
     n->name = name;
     n->noBed = noBed;
     n->stayTime = stayTime;
+    n->roomChoice = roomChoice;
     n->next = head;
     head = n;
 }
@@ -372,14 +385,16 @@ void InsertNode(string noInd, string name, string noBed, string stayTime) {
 void displayList() {
     Node* curr = head;
     while (curr != NULL) {
-        cout << "\n\n\n\nNo. Of individuals: " << curr->noInd << endl;
-        cout << "\n\n\n\nName of the booker: " << curr->name << endl;
-        cout << "\n\n\n\nNO. of bed to be use: " << curr->noBed << endl;
-        cout << "\n\n\n\nStaying time: " << curr->stayTime << endl;
+        cout << "\t\t\tNo. Of individuals: " << curr->noInd << endl;
+        cout << "\t\t\tName of the booker: " << curr->name << endl;
+        cout << "\t\t\tNO. of bed to be use: " << curr->noBed << endl;
+        cout << "\t\t\tStaying time: " << curr->stayTime << endl;
+        cout << "\t\t\tRoom Category:"<<opt2<<endl;
+        cout << "\t\t\tRoom Number:"<<roomChoice<<endl;
 
         int x = std::stoi(curr->stayTime);
-        int cost = x/2;
-        cout<<"Total cost: "<<cost<<endl;
+        int cost = x*350;
+        cout<<"\t\t\tTotal cost: "<<cost<<endl;
 
         cout << endl;
         curr = curr->next;
@@ -404,17 +419,20 @@ void receipt(){
     std::cout<<R"(
 
 
-                                                 ██████╗ ███████╗ ██████╗███████╗██╗██████╗ ████████╗
-                                                ██╔══██╗██╔════╝██╔════╝██╔════╝██║██╔══██╗╚══██╔══╝
-                                                ██████╔╝█████╗  ██║     █████╗  ██║██████╔╝   ██║   
-                                                ██╔══██╗██╔══╝  ██║     ██╔══╝  ██║██╔═══╝    ██║   
-                                                ██║  ██║███████╗╚██████╗███████╗██║██║        ██║   
-                                                ╚═╝  ╚═╝╚══════╝ ╚═════╝╚══════╝╚═╝╚═╝        ╚═╝ 
+                                              
+                                                                ______     ______     ______     ______     __     ______   ______  
+                                                                /\  == \   /\  ___\   /\  ___\   /\  ___\   /\ \   /\  == \ /\__  _\ 
+                                                                \ \  __<   \ \  __\   \ \ \____  \ \  __\   \ \ \  \ \  _-/ \/_/\ \/ 
+                                                                \ \_\ \_\  \ \_____\  \ \_____\  \ \_____\  \ \_\  \ \_\      \ \_\ 
+                                                                \/_/ /_/   \/_____/   \/_____/   \/_____/   \/_/   \/_/       \/_/ 
+                                                                     
+
 
     )"<<std::endl;
     displayList();
     cout<<"\n\n\n\nPress any key to continue....";
-    cin.get();
+    
+
 
 
 }
@@ -470,7 +488,8 @@ void receipt(){
             std::cout<<"                                                 How many hrs to stay? ";
             std::cin>>stayTime;
 
-            InsertNode(noInd, name, noBed, stayTime);
+            roomPanelReg();
+            InsertNode(noInd, name, noBed, stayTime,roomChoice);
        }
             flag = false;
             continue;
@@ -523,7 +542,7 @@ void receipt(){
             std::cout<<"                                                 How many hrs to stay? ";
             std::cin>>stayTime;
 
-            InsertNode(noInd, name, noBed, stayTime);
+            InsertNode(noInd, name, noBed, stayTime,roomChoice);
        }
        flag = false;
        continue;
@@ -578,7 +597,7 @@ void receipt(){
             std::cout<<"                                                 How many hrs to stay? ";
             std::cin>>stayTime;
 
-            InsertNode(noInd, name, noBed, stayTime);
+            InsertNode(noInd, name, noBed, stayTime,roomChoice);
        }
        flag = false;
        continue;
@@ -599,19 +618,9 @@ void doBooking(){
     db3();
     system("cls");
     db4();
-    bool flag=true;
-    do{
-    system("cls");
-    if(opt2 == "Regular" || opt2 == "regular"){
-        roomPanelReg();
-    }else if(opt2 == "Advance" || opt2 == "advance"){
-        roomPanelAdv();
-    }else if((opt2 == "Premium" || opt2 == "premium")){
-        roomPanelPrem();
-    }
-    }while(flag=true);
     system("cls");
     receipt();
+    
 
 
 
