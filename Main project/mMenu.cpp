@@ -2,7 +2,7 @@
 using namespace std;
 
 void mMenu(){
-    
+    system("cls");
     std:cout<<R"(
                                                                     
                         |||        __       __            __                                                      __                      _______                         __            __  __    __         ______             __         |||
