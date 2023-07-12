@@ -239,12 +239,75 @@ void db3(){
   }
 
 
+  struct Node {
+    string noInd;
+    string name;
+    string noBed;
+    string stayTime;
+    string roomChoice;
+    Node* next;
+};
 
-  void roomPanelReg(){
+Node* head = NULL;
+
+void InsertNode(string noInd, string name, string noBed, string stayTime, string roomChoice) {
+    Node* n = new Node();
+    n->noInd = noInd;
+    n->name = name;
+    n->noBed = noBed;
+    n->stayTime = stayTime;
+    n->roomChoice = roomChoice;
+    n->next = head;
+    head = n;
+}
+
+void displayList(Node* start) {
+    Node* curr = start;
+    while (curr != nullptr) {
+        cout << "\t\t\tNo. Of individuals: " << curr->noInd << endl;
+        cout << "\t\t\tName of the booker: " << curr->name << endl;
+        cout << "\t\t\tNO. of bed to be used: " << curr->noBed << endl;
+        cout << "\t\t\tStaying time: " << curr->stayTime << endl;
+        cout << "\t\t\tRoom Category: " << opt2 << endl;
+        cout << "\t\t\tRoom Number: " << curr->roomChoice << endl;
+
+        int x = stoi(curr->stayTime);
+        int cost = x * 350;
+        cout << "\t\t\tTotal cost: " << cost << endl;
+
+        cout << endl;
+        curr = curr->next;
+    }
+}
+
+void storeItemsToArray(std::string* items, int size) {
+    Node* curr = head;
+    int index = 0;
+
+    while (curr != nullptr && index < size) {
+        items[index] = curr->name;
+        curr = curr->next;
+        index++;
+    }
+
+}
+
+bool isRoomAvailable(string roomChoice) {
+    Node* curr = head;
+    while (curr != nullptr) {
+        if (curr->roomChoice == roomChoice) {
+            return false;  // Room is already claimed
+        }
+        curr = curr->next;
+    }
+    return true;  // Room is available
+}
+
+void roomPanelReg() {
     system("cls");
-    bool flag=true;
-    do{
-    std::cout<<R"(
+    bool flag = true;
+    do {
+        std::cout<<R"(
                                     
                         .______       _______   _______  __    __   __          ___      .______      
                         |   _  \     |   ____| /  _____||  |  |  | |  |        /   \     |   _  \     
@@ -269,19 +332,21 @@ void db3(){
 
 
     )"<<std::endl;
-
-    std::cout<<"                                                 Insert the room that you want to claim: ";
-    std::cin>>roomChoice;
-    flag=false;
-    continue;
-    }while(flag==true);
+        cout << "Insert the room that you want to claim: ";
+        cin >> roomChoice;
+        if (isRoomAvailable(roomChoice)) {
+            flag = false;
+        } else {
+            cout << "Room is already claimed. Please choose another room." << endl;
+        }
+    } while (flag);
 }
 
-void roomPanelAdv(){
+void roomPanelAdv() {
     system("cls");
-    bool flag=true;
-    do{
-    std::cout<<R"(
+    bool flag = true;
+    do {
+        std::cout<<R"(
                                                
                                                
 
@@ -308,20 +373,21 @@ void roomPanelAdv(){
 
 
     )"<<std::endl;
-
-    std::cout<<"                                                 Insert the room that you want to claim: ";
-    std::cin>>roomChoice;
-    flag=false;
-    continue;
-    }while(flag==true);
-    
+        cout << "Insert the room that you want to claim: ";
+        cin >> roomChoice;
+        if (isRoomAvailable(roomChoice)) {
+            flag = false;
+        } else {
+            cout << "Room is already claimed. Please choose another room." << endl;
+        }
+    } while (flag);
 }
 
-void roomPanelPrem(){
+void roomPanelPrem() {
     system("cls");
-    bool flag=true;
-    do{
-    std::cout<<R"(
+    bool flag = true;
+    do {
+        std::cout<<R"(
 
 
 
@@ -348,74 +414,18 @@ void roomPanelPrem(){
 
 
     )"<<std::endl;
-
-    std::cout<<"                                                 Insert the room that you want to claim: ";
-    std::cin>>roomChoice;
-    flag=false;
-    continue;
-    }while(flag==true);
+        cout << "Insert the room that you want to claim: ";
+        cin >> roomChoice;
+        if (isRoomAvailable(roomChoice)) {
+            flag = false;
+        } else {
+            cout << "Room is already claimed. Please choose another room." << endl;
+        }
+    } while (flag);
 }
 
-
-
-
-
-  struct Node {
-    string noInd;
-    string name;
-    string noBed;
-    string stayTime;
-    string roomChoice;
-    Node* next;
-};
-
-Node* head = NULL;
-
-void InsertNode(string noInd, string name, string noBed, string stayTime, string roomChoice) {
-    Node* n = new Node();
-    n->noInd = noInd;
-    n->name = name;
-    n->noBed = noBed;
-    n->stayTime = stayTime;
-    n->roomChoice = roomChoice;
-    n->next = head;
-    head = n;
-}
-
-void displayList() {
-    Node* curr = head;
-    while (curr != NULL) {
-        cout << "\t\t\tNo. Of individuals: " << curr->noInd << endl;
-        cout << "\t\t\tName of the booker: " << curr->name << endl;
-        cout << "\t\t\tNO. of bed to be use: " << curr->noBed << endl;
-        cout << "\t\t\tStaying time: " << curr->stayTime << endl;
-        cout << "\t\t\tRoom Category:"<<opt2<<endl;
-        cout << "\t\t\tRoom Number:"<<curr->roomChoice<<endl;
-
-        int x = std::stoi(curr->stayTime);
-        int cost = x*350;
-        cout<<"\t\t\tTotal cost: "<<cost<<endl;
-
-        cout << endl;
-        curr = curr->next;
-    }
-}
-
-void storeItemsToArray(std::string* items, int size) {
-    Node* curr = head;
-    int index = 0;
-
-    while (curr != nullptr && index < size) {
-        // Store the desired data from the node into the array
-        items[index] = curr->name;
-        curr = curr->next;
-        index++;
-    }
-
-}
-
-void receipt(){
-
+void receipt() {
+    system("cls");
     std::cout<<R"(
 
 
@@ -429,14 +439,35 @@ void receipt(){
 
 
     )"<<std::endl;
-    displayList();
-    cout<<"\n\n\n\nPress any key to continue....";
-    
+    cout << "\n\n\t\t\t\tRECEIPT" << endl;
+    cout << "\t\t\t--------------------------------" << endl;
 
+    int numBookings = 0;  // Counter for the number of bookings made in the current transaction
+    Node* curr = head;    // Starting node for the current transaction
 
+    while (curr != nullptr) {
+        numBookings++;
+        cout << "\t\t\tNo. Of individuals: " << curr->noInd << endl;
+        cout << "\t\t\tName of the booker: " << curr->name << endl;
+        cout << "\t\t\tNO. of bed to be used: " << curr->noBed << endl;
+        cout << "\t\t\tStaying time: " << curr->stayTime << endl;
+        cout << "\t\t\tRoom Category: " << opt2 << endl;
+        cout << "\t\t\tRoom Number: " << curr->roomChoice << endl;
 
+        int x = stoi(curr->stayTime);
+        int cost = x * 350;
+        cout << "\t\t\tTotal cost: " << cost << endl;
+
+        cout << endl;
+        curr = curr->next;
+    }
+
+    cout << "\n\t\t\t--------------------------------" << endl;
+    cout << "\t\t\tNumber of Bookings: " << numBookings << endl;
+    cout << "\n\n\nPress any key to continue....";
+    cin.ignore();
+    cin.get();
 }
-
 
   void db4(){
     string noInd,name, noBed, stayTime;
@@ -609,7 +640,7 @@ void receipt(){
   }
 
 
-void doBooking(){
+void doBooking() {
     system("cls");
     db1();
     system("cls");
@@ -620,8 +651,4 @@ void doBooking(){
     db4();
     system("cls");
     receipt();
-    
-
-
-
 }
