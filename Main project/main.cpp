@@ -15,7 +15,7 @@ int main(){
    char opt;
    
    fpage();
-   cout<<"Press any key to continue....";
+   cout<<"\t\t\t\tPress any key to continue....";
    cin.get();
 
     
@@ -29,9 +29,6 @@ int main(){
     switch(opt){
         case '1':
             doBooking();
-            mMenu();
-            cout<<"                                                                                                               Your answer: ";
-            cin>>opt;
             break;
         case '2':
             break;

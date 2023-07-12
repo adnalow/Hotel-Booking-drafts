@@ -390,7 +390,7 @@ void displayList() {
         cout << "\t\t\tNO. of bed to be use: " << curr->noBed << endl;
         cout << "\t\t\tStaying time: " << curr->stayTime << endl;
         cout << "\t\t\tRoom Category:"<<opt2<<endl;
-        cout << "\t\t\tRoom Number:"<<roomChoice<<endl;
+        cout << "\t\t\tRoom Number:"<<curr->roomChoice<<endl;
 
         int x = std::stoi(curr->stayTime);
         int cost = x*350;
