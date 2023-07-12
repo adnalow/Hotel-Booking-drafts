@@ -1,4 +1,6 @@
 #include<iostream>
+#include <stack>
+#include <queue>
 #include "fpage.cpp"
 #include "mMenu.cpp"
 #include "functions.cpp"
@@ -24,10 +26,13 @@ int main() {
                 doBooking();
                 break;
             case '2':
+                viewBookings();
                 break;
             case '3':
+                modifyBooking();
                 break;
             case '4':
+                feedbackSystem();
                 break;
             case '5':
                 break;

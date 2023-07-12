@@ -1,4 +1,6 @@
 #include<iostream>
+#include <stack>
+#include <queue>
 using namespace std;
 
 
@@ -245,6 +247,7 @@ void db3(){
     string noBed;
     string stayTime;
     string roomChoice;
+    string roomCategory;
     Node* next;
 };
 
@@ -387,6 +390,7 @@ void roomPanelPrem() {
     system("cls");
     bool flag = true;
     do {
+        system("cls");
         std::cout<<R"(
 
 
@@ -509,18 +513,19 @@ void receipt() {
         )"<<std::endl;
        
         for(int i=0; i<limit;i++){
-            system("cls");
-            std::cout<<"                                                 No. of individuals that will use the room: ";
-            std::cin>>noInd;
-            std::cout<<"                                                 Name of the booker: ";
-            std::cin>>name;
-            std::cout<<"                                                 How many beds to be use? ";
-            std::cin>>noBed;
-            std::cout<<"                                                 How many hrs to stay? ";
-            std::cin>>stayTime;
+                std::cout << "\t\t\t\t\tNo. of individuals that will use the room: ";
+                std::cin >> noInd;
+                std::cin.ignore();  // Ignore the newline character
 
-            roomPanelReg();
-            InsertNode(noInd, name, noBed, stayTime,roomChoice);
+                std::cout << "\t\t\t\t\tName of the booker: ";
+                getline(std::cin, name);
+                std::cout << "\t\t\t\t\tHow many beds to be used? ";
+                getline(std::cin, noBed);
+                std::cout << "\t\t\t\t\tHow many hours to stay? ";
+                getline(std::cin, stayTime);
+
+                roomPanelReg();
+                InsertNode(noInd, name, noBed, stayTime, roomChoice);
        }
             flag = false;
             continue;
@@ -563,23 +568,24 @@ void receipt() {
     
         )"<<std::endl;
 
-       for(int i=0; i<limit;i++){
-            std::cout<<"                                                 No. of individuals that will use the room: ";
-            std::cin>>noInd;
-            std::cout<<"                                                 Name of the booker: ";
-            std::cin>>name;
-            std::cout<<"                                                 How many beds to be use? ";
-            std::cin>>noBed;
-            std::cout<<"                                                 How many hrs to stay? ";
-            std::cin>>stayTime;
+        for(int i=0; i<limit;i++){
+                std::cout << "\t\t\t\t\tNo. of individuals that will use the room: ";
+                std::cin >> noInd;
+                std::cin.ignore();  // Ignore the newline character
 
-            InsertNode(noInd, name, noBed, stayTime,roomChoice);
+                std::cout << "\t\t\t\t\tName of the booker: ";
+                getline(std::cin, name);
+                std::cout << "\t\t\t\t\tHow many beds to be used? ";
+                getline(std::cin, noBed);
+                std::cout << "\t\t\t\t\tHow many hours to stay? ";
+                getline(std::cin, stayTime);
+
+                roomPanelReg();
+                InsertNode(noInd, name, noBed, stayTime, roomChoice);
        }
-       flag = false;
-       continue;
-       
-       }while(flag==true);
-
+            flag = false;
+            continue;
+        }while(flag == true);
     
 
     }else if(opt2 == "Premium" || opt2 == "Premium"){
@@ -619,25 +625,28 @@ void receipt() {
     
         )"<<std::endl;
        for(int i=0; i<limit;i++){
-            std::cout<<"                                                 No. of individuals that will use the room: ";
-            std::cin>>noInd;
-            std::cout<<"                                                 Name of the booker: ";
-            std::cin>>name;
-            std::cout<<"                                                 How many beds to be use? ";
-            std::cin>>noBed;
-            std::cout<<"                                                 How many hrs to stay? ";
-            std::cin>>stayTime;
+                std::cout << "\t\t\t\t\tNo. of individuals that will use the room: ";
+                std::cin >> noInd;
+                std::cin.ignore();  // Ignore the newline character
 
-            InsertNode(noInd, name, noBed, stayTime,roomChoice);
+                std::cout << "\t\t\t\t\tName of the booker: ";
+                getline(std::cin, name);
+                std::cout << "\t\t\t\t\tHow many beds to be used? ";
+                getline(std::cin, noBed);
+                std::cout << "\t\t\t\t\tHow many hours to stay? ";
+                getline(std::cin, stayTime);
+
+                roomPanelReg();
+                InsertNode(noInd, name, noBed, stayTime, roomChoice);
        }
-       flag = false;
-       continue;
-
-         }while(flag==true);
+            flag = false;
+            continue;
+        }while(flag == true);
+    
     }
     
 
-  }
+}
 
 
 void doBooking() {
@@ -651,4 +660,200 @@ void doBooking() {
     db4();
     system("cls");
     receipt();
+}
+
+void viewBookings(){
+    system("cls");
+    cout << "Bookings:\n";
+    displayList(head);
+  
+    cout << "\nPress any key to go back to the main menu...";
+    cin.ignore();
+    cin.get();
+}
+
+void modifyBooking() {
+    system("cls");
+    string bookerName;
+    cout << "Enter the name of the booker: ";
+    cin.ignore();
+    getline(cin, bookerName);
+
+    Node* curr = head;
+    Node* foundNode = nullptr;
+    
+    // Find the booking based on the booker's name
+    while (curr != nullptr) {
+        if (curr->name == bookerName) {
+            foundNode = curr;
+            break;
+        }
+        curr = curr->next;
+    }
+    
+    if (foundNode == nullptr) {
+        cout << "Booking not found for the given name.\n";
+        cout << "Press any key to go back to the main menu...";
+        cin.ignore();
+        cin.get();
+        return;
+    }
+
+    system("cls");
+    cout << "Booking found for the name: " << foundNode->name << "\n\n";
+    cout << "What information would you like to modify?\n";
+    cout << "1. No. of individuals\n";
+    cout << "2. Name of the booker\n";
+    cout << "3. No. of beds to be used\n";
+    cout << "4. Staying time\n";
+    cout << "5. Room category\n";
+    cout << "6. Room number\n";
+    cout << "Choose an option (1-6): ";
+
+    int choice;
+    cin >> choice;
+
+    switch (choice) {
+        case 1: {
+            cout << "Enter the new value for No. of individuals: ";
+            string newValue;
+            cin.ignore();
+            getline(cin, newValue);
+            foundNode->noInd = newValue;
+            break;
+        }
+        case 2: {
+            cout << "Enter the new value for Name of the booker: ";
+            string newValue;
+            cin.ignore();
+            getline(cin, newValue);
+            foundNode->name = newValue;
+            break;
+        }
+        case 3: {
+            cout << "Enter the new value for No. of beds to be used: ";
+            string newValue;
+            cin.ignore();
+            getline(cin, newValue);
+            foundNode->noBed = newValue;
+            break;
+        }
+        case 4: {
+            cout << "Enter the new value for Staying time: ";
+            string newValue;
+            cin.ignore();
+            getline(cin, newValue);
+            foundNode->stayTime = newValue;
+            break;
+        }
+        case 5: {
+            cout << "Enter the new value for Room category: ";
+            string newValue;
+            cin.ignore();
+            getline(cin, newValue);
+            foundNode->roomCategory = newValue;
+            break;
+        }
+        case 6: {
+            cout << "Enter the new value for Room number: ";
+            string newValue;
+            cin.ignore();
+            getline(cin, newValue);
+            foundNode->roomChoice = newValue;
+            break;
+        }
+        default:
+            cout << "Invalid choice.\n";
+            break;
+    }
+
+    cout << "Modification successful.\n";
+    cout << "Press any key to go back to the main menu...";
+    cin.ignore();
+    cin.get();
+
+}
+
+
+
+struct Feedback {
+    string user;
+    string comment;
+};
+
+// Function to allow the user to give feedback
+void giveFeedback(stack<Feedback>& feedbackStack, queue<Feedback>& feedbackQueue) {
+    Feedback newFeedback;
+    cin.ignore();
+    cout << "Enter your name: ";
+    getline(cin, newFeedback.user);
+    cout << "Enter your comment: ";
+    getline(cin, newFeedback.comment);
+
+    feedbackStack.push(newFeedback);
+    feedbackQueue.push(newFeedback);
+
+    cout << "Feedback submitted successfully!\n";
+}
+
+// Function to view feedback using a stack
+void viewFeedbackUsingStack(stack<Feedback>& feedbackStack) {
+    cout << "Feedbacks (Last to First):\n";
+    stack<Feedback> tempStack = feedbackStack;
+    while (!tempStack.empty()) {
+        Feedback currentFeedback = tempStack.top();
+        tempStack.pop();
+        cout << "User: " << currentFeedback.user << endl;
+        cout << "Comment: " << currentFeedback.comment << endl;
+        cout << endl;
+    }
+}
+
+// Function to view feedback using a queue
+void viewFeedbackUsingQueue(queue<Feedback>& feedbackQueue) {
+    cout << "Feedbacks (First to Last):\n";
+    queue<Feedback> tempQueue = feedbackQueue;
+    while (!tempQueue.empty()) {
+        Feedback currentFeedback = tempQueue.front();
+        tempQueue.pop();
+        cout << "User: " << currentFeedback.user << endl;
+        cout << "Comment: " << currentFeedback.comment << endl;
+        cout << endl;
+    }
+}
+
+void feedbackSystem() {
+    stack<Feedback> feedbackStack;
+    queue<Feedback> feedbackQueue;
+    int choice;
+
+    system("cls");
+
+    do {
+        cout << "Feedback System\n";
+        cout << "1. Give Feedback\n";
+        cout << "2. View Feedback (using Stack)\n";
+        cout << "3. View Feedback (using Queue)\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                giveFeedback(feedbackStack, feedbackQueue);
+                break;
+            case 2:
+                viewFeedbackUsingStack(feedbackStack);
+                break;
+            case 3:
+                viewFeedbackUsingQueue(feedbackQueue);
+                break;
+            case 4:
+                cout << "Exiting...\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+                break;
+        }
+    } while (choice != 4);
 }
