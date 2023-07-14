@@ -287,8 +287,10 @@ void InsertNode(string noInd, string name, string noBed, string stayTime, string
 
     // Open the file for writing
     ofstream outFile(filename);
-    if (outFile.is_open()) {
-        // Write the information to the file
+    ofstream allBookingsFile("allbookings.txt", ios::app); // Open "allbookings.txt" in append mode
+
+    if (outFile.is_open() && allBookingsFile.is_open()) {
+        // Write the information to the unique file
         outFile << "No. Of individuals: " << n->noInd << endl;
         outFile << "Name of the booker: " << n->name << endl;
         outFile << "NO. of bed to be used: " << n->noBed << endl;
@@ -302,7 +304,19 @@ void InsertNode(string noInd, string name, string noBed, string stayTime, string
 
         outFile << endl;
 
+        // Write the information to "allbookings.txt"
+        allBookingsFile << "No. Of individuals: " << n->noInd << endl;
+        allBookingsFile << "Name of the booker: " << n->name << endl;
+        allBookingsFile << "NO. of bed to be used: " << n->noBed << endl;
+        allBookingsFile << "Staying time: " << n->stayTime << endl;
+        allBookingsFile << "Room Category: " << opt2 << endl;
+        allBookingsFile << "Room Number: " << n->roomChoice << endl;
+        allBookingsFile << "Total cost: " << cost << endl;
+
+        allBookingsFile << endl;
+
         outFile.close();
+        allBookingsFile.close();
     } else {
         cout << "Unable to open file for writing." << endl;
     }
@@ -614,21 +628,19 @@ void deleteBooking() {
     cin.ignore();
     getline(cin, name);
 
-    // Read the specific transaction's text file
-    auto timestamp = chrono::system_clock::now();
-    auto timestampSeconds = chrono::duration_cast<chrono::seconds>(timestamp.time_since_epoch()).count();
-    string filename = "booking_" + to_string(timestampSeconds) + ".txt";
-
-    ifstream inFile(filename);
+    // Open the "allbookings.txt" file for reading
+    ifstream inFile("allbookings.txt");
     if (inFile.is_open()) {
         string line;
         string fileContent;
+        bool bookingFound = false;
         while (getline(inFile, line)) {
             if (line.find("Name of the booker: " + name) != string::npos) {
                 // Skip the lines corresponding to the booking with the inputted name
                 for (int i = 0; i < 7; i++) {
                     getline(inFile, line);
                 }
+                bookingFound = true;
             } else {
                 // Append the lines to the updated file content
                 fileContent += line + "\n";
@@ -636,42 +648,61 @@ void deleteBooking() {
         }
         inFile.close();
 
-        // Rewrite the transaction's text file with the updated content
-        ofstream outFile(filename);
-        if (outFile.is_open()) {
-            outFile << fileContent;
-            outFile.close();
-            cout << "Booking for " << name << " has been deleted." << endl;
+        if (bookingFound) {
+            // Rewrite the "allbookings.txt" file with the updated content
+            ofstream outFile("allbookings.txt");
+            if (outFile.is_open()) {
+                outFile << fileContent;
+                outFile.close();
+                cout << "Booking for " << name << " has been deleted." << endl;
+            } else {
+                cout << "Unable to update 'allbookings.txt'." << endl;
+            }
         } else {
-            cout << "Unable to update the receipt file." << endl;
+            cout << "Booking not found for " << name << "." << endl;
         }
     } else {
-        cout << "Unable to open receipt file for reading." << endl;
+        cout << "Unable to open 'allbookings.txt' for reading." << endl;
     }
 }
 
 
-void viewBookings(){
+
+
+
+void viewBookings() {
     char choice;
     system("cls");
     cout << "\t\t\t\t\t\t\t\tBookings:\n";
-    displayList(head);
+     // Read and display the contents of "allbookings.txt"
+    ifstream allBookingsFile("allbookings.txt");
+    if (allBookingsFile.is_open()) {
+        string line;
+        while (getline(allBookingsFile, line)) {
+            cout <<"\t\t\t\t\t\t\t\t"<< line << endl;
+        }
+        allBookingsFile.close();
+    } else {
+        cout << "Unable to open 'allbookings.txt' for reading." << endl;
+    }
 
-    cout<<"Do you want to delete a specific booking?[Y][N] "<<endl;
-    cin>>choice;
+    cout << "Do you want to delete a specific booking? [Y/N]: ";
+    cin >> choice;
 
-    if(choice == 'Y' || choice == 'y'){
+    if (choice == 'Y' || choice == 'y') {
         deleteBooking();
         cout << "\n\t\t\t\t\t\t\t\tPress any key to go back to the main menu...";
         cin.ignore();
         cin.get();
-    }else{
-           cout << "\n\t\t\t\t\t\t\t\tPress any key to go back to the main menu...";
-           cin.ignore();
-           cin.get();
+    } else {
+        cout << "\n\t\t\t\t\t\t\t\tPress any key to go back to the main menu...";
+        cin.ignore();
+        cin.get();
     }
     
+   
 }
+
 
 void modifyBooking() {
     system("cls");
