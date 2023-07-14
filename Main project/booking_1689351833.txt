@@ -1,5 +1,5 @@
 Name of the booker: adrian
-Room Category: regular
+No. Of individuals: 7
 NO. of bed to be used: 5
 Staying time: 8
 Room Category: advance

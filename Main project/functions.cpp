@@ -690,100 +690,106 @@ void modifyBooking() {
     cin.ignore();
     getline(cin, bookerName);
 
-    Node* curr = head;
-    Node* foundNode = nullptr;
-    
-    // Find the booking based on the booker's name
-    while (curr != nullptr) {
-        if (curr->name == bookerName) {
-            foundNode = curr;
-            break;
+    // Open the "allbookings.txt" file for reading
+    ifstream inFile("allbookings.txt");
+    if (inFile.is_open()) {
+        string line;
+        string fileContent;
+        bool bookingFound = false;
+        while (getline(inFile, line)) {
+            if (line.find("Name of the booker: " + bookerName) != string::npos) {
+                // Modify the specific booking information
+                bookingFound = true;
+                fileContent += line + "\n";
+                getline(inFile, line); // Read the No. Of individuals line
+                cout << "\t\t\t\t\t\t\t\tWhat information would you like to modify?\n";
+                cout << "\t\t\t\t\t\t\t\t1. Name of the booker\n";
+                cout << "\t\t\t\t\t\t\t\t2. No. of individuals\n";
+                cout << "\t\t\t\t\t\t\t\t3. No. of beds to be used\n";
+                cout << "\t\t\t\t\t\t\t\t4. Staying time\n";
+                cout << "\t\t\t\t\t\t\t\t5. Room category\n";
+                cout << "\t\t\t\t\t\t\t\t6. Room number\n";
+                cout << "\t\t\t\t\t\t\t\tChoose an option (1-6): ";
+                int choice;
+                cin >> choice;
+                cin.ignore();
+
+                switch (choice) {
+                    case 1: {
+                        cout << "\t\t\t\t\t\t\t\tEnter the new value for Name of the booker: ";
+                        string newValue;
+                        getline(cin, newValue);
+                        fileContent += "Name of the booker: " + newValue + "\n";
+                        break;
+                        
+                    }
+                    case 2: {
+                        cout << "\t\t\t\t\t\t\t\tEnter the new value for No. of individuals: ";
+                        string newValue;
+                        getline(cin, newValue);
+                        fileContent += "No. Of individuals: " + newValue + "\n";
+                        break;
+                    }
+                    case 3: {
+                        cout << "\t\t\t\t\t\t\t\tEnter the new value for No. of beds to be used: ";
+                        string newValue;
+                        getline(cin, newValue);
+                        fileContent += "NO. of bed to be used: " + newValue + "\n";
+                        break;
+                    }
+                    case 4: {
+                        cout << "\t\t\t\t\t\t\t\tEnter the new value for Staying time: ";
+                        string newValue;
+                        getline(cin, newValue);
+                        fileContent += "Staying time: " + newValue + "\n";
+                        break;
+                    }
+                    case 5: {
+                        cout << "\t\t\t\t\t\t\t\tEnter the new value for Room category: ";
+                        string newValue;
+                        getline(cin, newValue);
+                        fileContent += "Room Category: " + newValue + "\n";
+                        break;
+                    }
+                    case 6: {
+                        cout << "\t\t\t\t\t\t\t\tEnter the new value for Room number: ";
+                        string newValue;
+                        getline(cin, newValue);
+                        fileContent += "Room Number: " + newValue + "\n";
+                        break;
+                    }
+                    default:
+                        cout << "\t\t\t\t\t\t\t\tInvalid choice.\n";
+                        break;
+                }
+            } else {
+                fileContent += line + "\n";
+            }
         }
-        curr = curr->next;
+        inFile.close();
+
+        if (bookingFound) {
+            // Rewrite the "allbookings.txt" file with the updated content
+            ofstream outFile("allbookings.txt");
+            if (outFile.is_open()) {
+                outFile << fileContent;
+                outFile.close();
+                cout << "\t\t\t\t\t\t\t\tModification successful.\n";
+            } else {
+                cout << "Unable to update 'allbookings.txt'." << endl;
+            }
+        } else {
+            cout << "\t\t\t\t\t\t\t\tBooking not found for the given name.\n";
+        }
+    } else {
+        cout << "Unable to open 'allbookings.txt' for reading." << endl;
     }
-    
-    if (foundNode == nullptr) {
-        cout << "\t\t\t\t\t\t\t\tBooking not found for the given name.\n";
-        cout << "\t\t\t\t\t\t\t\tPress any key to go back to the main menu...";
-        cin.ignore();
-        cin.get();
-        return;
-    }
 
-    system("cls");
-    cout << "\t\t\t\t\t\t\t\tBooking found for the name: " << foundNode->name << "\n\n";
-    cout << "\t\t\t\t\t\t\t\tWhat information would you like to modify?\n";
-    cout << "\t\t\t\t\t\t\t\t1. No. of individuals\n";
-    cout << "\t\t\t\t\t\t\t\t2. Name of the booker\n";
-    cout << "\t\t\t\t\t\t\t\t3. No. of beds to be used\n";
-    cout << "\t\t\t\t\t\t\t\t4. Staying time\n";
-    cout << "\t\t\t\t\t\t\t\t5. Room category\n";
-    cout << "\t\t\t\t\t\t\t\t6. Room number\n";
-    cout << "\t\t\t\t\t\t\t\tChoose an option (1-6): ";
-
-    int choice;
-    cin >> choice;
-
-    switch (choice) {
-        case 1: {
-            cout << "\t\t\t\t\t\t\t\tEnter the new value for No. of individuals: ";
-            string newValue;
-            cin.ignore();
-            getline(cin, newValue);
-            foundNode->noInd = newValue;
-            break;
-        }
-        case 2: {
-            cout << "\t\t\t\t\t\t\t\tEnter the new value for Name of the booker: ";
-            string newValue;
-            cin.ignore();
-            getline(cin, newValue);
-            foundNode->name = newValue;
-            break;
-        }
-        case 3: {
-            cout << "\t\t\t\t\t\t\t\tEnter the new value for No. of beds to be used: ";
-            string newValue;
-            cin.ignore();
-            getline(cin, newValue);
-            foundNode->noBed = newValue;
-            break;
-        }
-        case 4: {
-            cout << "\t\t\t\t\t\t\t\tEnter the new value for Staying time: ";
-            string newValue;
-            cin.ignore();
-            getline(cin, newValue);
-            foundNode->stayTime = newValue;
-            break;
-        }
-        case 5: {
-            cout << "\t\t\t\t\t\t\t\tEnter the new value for Room category: ";
-            string newValue;
-            cin.ignore();
-            getline(cin, newValue);
-            foundNode->roomCategory = newValue;
-            break;
-        }
-        case 6: {
-            cout << "\t\t\t\t\t\t\t\tEnter the new value for Room number: ";
-            string newValue;
-            cin.ignore();
-            getline(cin, newValue);
-            foundNode->roomChoice = newValue;
-            break;
-        }
-        default:
-            cout << "\t\t\t\t\t\t\t\tInvalid choice.\n";
-            break;
-    }
-
-    cout << "\t\t\t\t\t\t\t\tModification successful.\n";
     cout << "\t\t\t\t\t\t\t\tPress any key to go back to the main menu...";
     cin.ignore();
     cin.get();
-
 }
+
 
 
 
