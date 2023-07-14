@@ -4,6 +4,8 @@
 #include "fpage.cpp"
 #include "mMenu.cpp"
 #include "functions.cpp"
+#include <fstream>
+#include <chrono>
 using namespace std;
 
 int main() {

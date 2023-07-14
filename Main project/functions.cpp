@@ -1,6 +1,8 @@
 #include<iostream>
 #include <stack>
 #include <queue>
+#include <fstream>
+#include <chrono>
 using namespace std;
 
 
@@ -277,7 +279,35 @@ void InsertNode(string noInd, string name, string noBed, string stayTime, string
     n->roomChoice = roomChoice;
     n->next = head;
     head = n;
+
+    // Generate a unique filename using timestamp
+    auto timestamp = chrono::system_clock::now();
+    auto timestampSeconds = chrono::duration_cast<chrono::seconds>(timestamp.time_since_epoch()).count();
+    string filename = "booking_" + to_string(timestampSeconds) + ".txt";
+
+    // Open the file for writing
+    ofstream outFile(filename);
+    if (outFile.is_open()) {
+        // Write the information to the file
+        outFile << "No. Of individuals: " << n->noInd << endl;
+        outFile << "Name of the booker: " << n->name << endl;
+        outFile << "NO. of bed to be used: " << n->noBed << endl;
+        outFile << "Staying time: " << n->stayTime << endl;
+        outFile << "Room Category: " << opt2 << endl;
+        outFile << "Room Number: " << n->roomChoice << endl;
+
+        int x = stoi(n->stayTime);
+        int cost = x * 350;
+        outFile << "Total cost: " << cost << endl;
+
+        outFile << endl;
+
+        outFile.close();
+    } else {
+        cout << "Unable to open file for writing." << endl;
+    }
 }
+
 
 void displayList(Node* start) {
     Node* curr = start;
@@ -443,8 +473,8 @@ void roomPanelPrem() {
     } while (flag);
 }
 
+
 void receipt() {
-    system("cls");
     std::cout<<R"(
 
 
@@ -458,32 +488,28 @@ void receipt() {
 
 
     )"<<std::endl;
+    system("cls");
     cout << "\n\n\t\t\t\t\t\t\t\tRECEIPT" << endl;
     cout << "\t\t\t\t\t\t\t\t--------------------------------" << endl;
 
-    int numBookings = 0;  // Counter for the number of bookings made in the current transaction
-    Node* curr = head;    // Starting node for the current transaction
+    // Read and display the receipt from the specific transaction's text file
+    auto timestamp = chrono::system_clock::now();
+    auto timestampSeconds = chrono::duration_cast<chrono::seconds>(timestamp.time_since_epoch()).count();
+    string filename = "booking_" + to_string(timestampSeconds) + ".txt";
 
-    while (curr != nullptr) {
-        numBookings++;
-        cout << "\t\t\t\t\t\t\t\tNo. Of individuals: " << curr->noInd << endl;
-        cout << "\t\t\t\t\t\t\t\tName of the booker: " << curr->name << endl;
-        cout << "\t\t\t\t\t\t\t\tNO. of bed to be used: " << curr->noBed << endl;
-        cout << "\t\t\t\t\t\t\t\tStaying time: " << curr->stayTime << endl;
-        cout << "\t\t\t\t\t\t\t\tRoom Category: " << opt2 << endl;
-        cout << "\t\t\t\t\t\t\t\tRoom Number: " << curr->roomChoice << endl;
+    ifstream inFile(filename);
+    if (inFile.is_open()) {
+        string line;
+        while (getline(inFile, line)) {
+            cout << "\t\t\t\t\t\t\t\t" << line << endl;
+        }
 
-        int x = stoi(curr->stayTime);
-        int cost = x * 350;
-        cout << "\t\t\t\t\t\t\t\tTotal cost: " << cost << endl;
-
-        cout << endl;
-        curr = curr->next;
+        inFile.close();
+    } else {
+        cout << "Unable to open receipt file for reading." << endl;
     }
 
-    cout << "\n\t\t\t\t\t\t\t\t--------------------------------" << endl;
-    cout << "\t\t\t\t\t\t\t\tNumber of Bookings: " << numBookings << endl;
-    cout << "\n\n\n\t\t\t\t\tPress any key to continue....";
+    cout << "\n\n\t\t\t\t\tPress any key to continue....";
     cin.ignore();
     cin.get();
 }
@@ -588,30 +614,39 @@ void deleteBooking() {
     cin.ignore();
     getline(cin, name);
 
-    Node* curr = head;
-    Node* prev = nullptr;
-    bool found = false;
+    // Read the specific transaction's text file
+    auto timestamp = chrono::system_clock::now();
+    auto timestampSeconds = chrono::duration_cast<chrono::seconds>(timestamp.time_since_epoch()).count();
+    string filename = "booking_" + to_string(timestampSeconds) + ".txt";
 
-    while (curr != nullptr) {
-        if (curr->name == name) {
-            found = true;
-            break;
+    ifstream inFile(filename);
+    if (inFile.is_open()) {
+        string line;
+        string fileContent;
+        while (getline(inFile, line)) {
+            if (line.find("Name of the booker: " + name) != string::npos) {
+                // Skip the lines corresponding to the booking with the inputted name
+                for (int i = 0; i < 7; i++) {
+                    getline(inFile, line);
+                }
+            } else {
+                // Append the lines to the updated file content
+                fileContent += line + "\n";
+            }
         }
-        prev = curr;
-        curr = curr->next;
-    }
+        inFile.close();
 
-    if (found) {
-        if (prev == nullptr) {
-            head = curr->next;
+        // Rewrite the transaction's text file with the updated content
+        ofstream outFile(filename);
+        if (outFile.is_open()) {
+            outFile << fileContent;
+            outFile.close();
+            cout << "Booking for " << name << " has been deleted." << endl;
         } else {
-            prev->next = curr->next;
+            cout << "Unable to update the receipt file." << endl;
         }
-
-        delete curr;
-        cout << "Booking for " << name << " has been deleted." << endl;
     } else {
-        cout << "Booking not found for " << name << "." << endl;
+        cout << "Unable to open receipt file for reading." << endl;
     }
 }
 
