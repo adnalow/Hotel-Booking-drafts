@@ -11,7 +11,7 @@ int main() {
     char opt;
 
     fpage();
-    cout << "\t\t\t\tPress any key to continue....";
+    cout << "\t\t\t\t\t\t\t\tPress any key to continue....";
     cin.ignore();
     cin.get();
 
@@ -34,13 +34,11 @@ int main() {
             case '4':
                 feedbackSystem();
                 break;
-            case '5':
-                break;
-            case '6':
+            default:
                 break;
         }
 
-        cout << "Do you want to go back to the main menu? [Y/N]: ";
+        cout << "\t\t\t\t\t\t\t\tDo you want to go back to the main menu? [Y/N]: ";
         cin >> back1;
     } while (back1 == 'y' || back1 == 'Y');
 
