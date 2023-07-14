@@ -291,8 +291,8 @@ void InsertNode(string noInd, string name, string noBed, string stayTime, string
 
     if (outFile.is_open() && allBookingsFile.is_open()) {
         // Write the information to the unique file
-        outFile << "No. Of individuals: " << n->noInd << endl;
         outFile << "Name of the booker: " << n->name << endl;
+        outFile << "No. Of individuals: " << n->noInd << endl;
         outFile << "NO. of bed to be used: " << n->noBed << endl;
         outFile << "Staying time: " << n->stayTime << endl;
         outFile << "Room Category: " << opt2 << endl;
@@ -305,8 +305,8 @@ void InsertNode(string noInd, string name, string noBed, string stayTime, string
         outFile << endl;
 
         // Write the information to "allbookings.txt"
-        allBookingsFile << "No. Of individuals: " << n->noInd << endl;
         allBookingsFile << "Name of the booker: " << n->name << endl;
+        allBookingsFile << "No. Of individuals: " << n->noInd << endl;
         allBookingsFile << "NO. of bed to be used: " << n->noBed << endl;
         allBookingsFile << "Staying time: " << n->stayTime << endl;
         allBookingsFile << "Room Category: " << opt2 << endl;
@@ -319,26 +319,6 @@ void InsertNode(string noInd, string name, string noBed, string stayTime, string
         allBookingsFile.close();
     } else {
         cout << "Unable to open file for writing." << endl;
-    }
-}
-
-
-void displayList(Node* start) {
-    Node* curr = start;
-    while (curr != nullptr) {
-        cout << "\t\t\t\t\t\t\t\tNo. Of individuals: " << curr->noInd << endl;
-        cout << "\t\t\t\t\t\t\t\tName of the booker: " << curr->name << endl;
-        cout << "\t\t\t\t\t\t\t\tNO. of bed to be used: " << curr->noBed << endl;
-        cout << "\t\t\t\t\t\t\t\tStaying time: " << curr->stayTime << endl;
-        cout << "\t\t\t\t\t\t\t\tRoom Category: " << opt2 << endl;
-        cout << "\t\t\t\t\t\t\t\tRoom Number: " << curr->roomChoice << endl;
-
-        int x = stoi(curr->stayTime);
-        int cost = x * 350;
-        cout << "\t\t\t\t\t\t\t\tTotal cost: " << cost << endl;
-
-        cout << endl;
-        curr = curr->next;
     }
 }
 
@@ -536,12 +516,11 @@ void receipt() {
          system("cls");
          regularPanel();
         for(int i=0; i<limit;i++){
-                std::cout << "\t\t\t\t\tNo. of individuals that will use the room: ";
-                std::cin >> noInd;
-                std::cin.ignore();  // Ignore the newline character
-
                 std::cout << "\t\t\t\t\tName of the booker: ";
-                getline(std::cin, name);
+                std::cin >> name;
+                std::cin.ignore();  // Ignore the newline character
+                std::cout << "\t\t\t\t\tNo. of individuals that will use the room: ";
+                getline(std::cin, noInd);
                 std::cout << "\t\t\t\t\tHow many beds to be used? ";
                 getline(std::cin, noBed);
                 std::cout << "\t\t\t\t\tHow many hours to stay? ";
@@ -560,12 +539,11 @@ void receipt() {
          system("cls");
          advancePanel();
         for(int i=0; i<limit;i++){
-                std::cout << "\t\t\t\t\tNo. of individuals that will use the room: ";
-                std::cin >> noInd;
-                std::cin.ignore();  // Ignore the newline character
-
                 std::cout << "\t\t\t\t\tName of the booker: ";
-                getline(std::cin, name);
+                std::cin >> name;
+                std::cin.ignore();  // Ignore the newline character
+                std::cout << "\t\t\t\t\tNo. of individuals that will use the room: ";
+                getline(std::cin, noInd);
                 std::cout << "\t\t\t\t\tHow many beds to be used? ";
                 getline(std::cin, noBed);
                 std::cout << "\t\t\t\t\tHow many hours to stay? ";
@@ -579,18 +557,17 @@ void receipt() {
         }while(flag == true);
     
 
-    }else if(opt2 == "Premium" || opt2 == "Premium"){
+    }else if(opt2 == "Premium" || opt2 == "premium"){
         bool flag=true;
-         do{
+        do{
          system("cls");
          premiumPanel();
-       for(int i=0; i<limit;i++){
-                std::cout << "\t\t\t\t\tNo. of individuals that will use the room: ";
-                std::cin >> noInd;
-                std::cin.ignore();  // Ignore the newline character
-
+        for(int i=0; i<limit;i++){
                 std::cout << "\t\t\t\t\tName of the booker: ";
-                getline(std::cin, name);
+                std::cin >> name;
+                std::cin.ignore();  // Ignore the newline character
+                std::cout << "\t\t\t\t\tNo. of individuals that will use the room: ";
+                getline(std::cin, noInd);
                 std::cout << "\t\t\t\t\tHow many beds to be used? ";
                 getline(std::cin, noBed);
                 std::cout << "\t\t\t\t\tHow many hours to stay? ";
@@ -665,6 +642,8 @@ void deleteBooking() {
         cout << "Unable to open 'allbookings.txt' for reading." << endl;
     }
 }
+
+
 
 
 
