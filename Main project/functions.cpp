@@ -8,6 +8,10 @@ int limit;
 string opt2;
 string roomChoice;
 
+class room {
+public:
+    string type;
+};
 
 
 void db1(){
@@ -578,14 +582,60 @@ void doBooking() {
     receipt();
 }
 
+void deleteBooking() {
+    string name;
+    cout << "Enter the name of the booker to delete the booking: ";
+    cin.ignore();
+    getline(cin, name);
+
+    Node* curr = head;
+    Node* prev = nullptr;
+    bool found = false;
+
+    while (curr != nullptr) {
+        if (curr->name == name) {
+            found = true;
+            break;
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+
+    if (found) {
+        if (prev == nullptr) {
+            head = curr->next;
+        } else {
+            prev->next = curr->next;
+        }
+
+        delete curr;
+        cout << "Booking for " << name << " has been deleted." << endl;
+    } else {
+        cout << "Booking not found for " << name << "." << endl;
+    }
+}
+
+
 void viewBookings(){
+    char choice;
     system("cls");
     cout << "\t\t\t\t\t\t\t\tBookings:\n";
     displayList(head);
-  
-    cout << "\n\t\t\t\t\t\t\t\tPress any key to go back to the main menu...";
-    cin.ignore();
-    cin.get();
+
+    cout<<"Do you want to delete a specific booking?[Y][N] "<<endl;
+    cin>>choice;
+
+    if(choice == 'Y' || choice == 'y'){
+        deleteBooking();
+        cout << "\n\t\t\t\t\t\t\t\tPress any key to go back to the main menu...";
+        cin.ignore();
+        cin.get();
+    }else{
+           cout << "\n\t\t\t\t\t\t\t\tPress any key to go back to the main menu...";
+           cin.ignore();
+           cin.get();
+    }
+    
 }
 
 void modifyBooking() {
