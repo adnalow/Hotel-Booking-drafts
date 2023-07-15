@@ -7,8 +7,6 @@
 #include <vector>
 using namespace std;
 
-
-int limit;
 string opt2;
 string roomChoice;
 
@@ -20,29 +18,25 @@ public:
 
 void db1(){
 
-    do{
     system("cls");
     std::cout<<R"(
 
 
-           
-                                                                                                                                                                            _____ 
-                                _____                                                       _          _                                     _      _          _           _|___  |
-                                |  |  |___ _ _ _    _____ ___ ___ _ _    ___ ___ ___ _____  / |___    _| |___    _ _ ___ _ _    _ _ _ ___ ___| |_   | |_ ___   | |_ ___ ___| |_|  _|
-                                |     | . | | | |  |     | .'|   | | |  |  _| . | . |     |/ /|_ -|  | . | . |  | | | . | | |  | | | | .'|   |  _|  |  _| . |  | . | . | . | '_|_|  
-                                |__|__|___|_____|  |_|_|_|__,|_|_|_  |  |_| |___|___|_|_|_|_/ |___|  |___|___|  |_  |___|___|  |_____|__,|_|_|_|    |_| |___|  |___|___|___|_,_|_|  
-                                                                |___|                                          |___|                                                               
-
-
-
-
+                                         _          _   _       _                 _                                                                               _ 
+                                        | |        | | ( )     | |               | |                                                                             | |
+                                        | |     ___| |_|/ ___  | |__   ___   ___ | | __  _   _  ___  _   _ _ __   _ __ ___   ___  _ __ ___    _ __   _____      _| |
+                                        | |    / _ \ __| / __| | '_ \ / _ \ / _ \| |/ / | | | |/ _ \| | | | '__| | '__/ _ \ / _ \| '_ ` _ \  | '_ \ / _ \ \ /\ / / |
+                                        | |___|  __/ |_  \__ \ | |_) | (_) | (_) |   <  | |_| | (_) | |_| | |    | | | (_) | (_) | | | | | | | | | | (_) \ V  V /|_|
+                                        \_____/\___|\__| |___/ |_.__/ \___/ \___/|_|\_\  \__, |\___/ \__,_|_|    |_|  \___/ \___/|_| |_| |_| |_| |_|\___/ \_/\_/ (_)
+                                                                                        __/ |                                                                     
+                                                                                        |___/                                                                      
+       
 
     )"<<std::endl;
 
-    std::cout<<"                                                                                     Enter your answer: ";
-    std::cin>>limit;
-
-    }while(limit <=0);
+    cout << "\t\t\t\t\t\t\t\tPress any key to continue....";
+    cin.ignore();
+    cin.get();
 
 }
 
@@ -75,7 +69,7 @@ std::cout<<R"(
                                                         ||                              ||     ||                              ||      ||                              ||
                                                         ||==============================||     ||==============================||      ||==============================||
 
-                                                                    cost: 350/hr                          cost: 350/hr                            cost: 350/hr    
+                                                                    cost: 350/hr                          cost: 750/hr                            cost: 1000/hr    
                                                                     ++++++++++++                          ++++++++++++                            ++++++++++++                                                                                                                                         
 
                                                                                                                         
@@ -151,7 +145,7 @@ void advancePanel(){
                                                                     ||                              ||     
                                                                     ||==============================||     
 
-                                                                              cost: 350/hr                          
+                                                                              cost: 750/hr                          
                                                                               ++++++++++++                           
 
     
@@ -186,7 +180,7 @@ void premiumPanel(){
                                                                     ||                              ||     
                                                                     ||==============================||     
 
-                                                                               cost: 350/hr                          
+                                                                               cost: 1000/hr                          
                                                                                ++++++++++++                           
 
     
@@ -220,7 +214,7 @@ void db3(){
         bool flag=false;
         do{
          system("cls");
-       
+         advancePanel();
         std::cout<<"                                                 Is this the room category that you want?[Y][N]";
         std::cin>>c;
         if(c == 'y' || c == 'Y'){
@@ -240,7 +234,7 @@ void db3(){
         bool flag=false;
         do{
          system("cls");
-       
+         premiumPanel();
         std::cout<<"                                                 Is this the room category that you want?[Y][N]";
         std::cin>>c;
         if(c == 'y' || c == 'Y'){
@@ -301,24 +295,65 @@ void InsertNode(string noInd, string name, string noBed, string stayTime, string
         outFile << "Room Number: " << n->roomChoice << endl;
 
         int x = stoi(n->stayTime);
-        int cost = x * 350;
-        outFile << "Total cost: " << cost << endl;
+        if(opt2 == "regular" || opt2 == "Regular"){
+            int cost = x * 350;
+            outFile << "Total cost: " << cost << endl;
 
-        outFile << endl;
+            outFile << endl;
 
-        // Write the information to "allbookings.txt"
-        allBookingsFile << "Name of the booker: " << n->name << endl;
-        allBookingsFile << "No. Of individuals: " << n->noInd << endl;
-        allBookingsFile << "NO. of bed to be used: " << n->noBed << endl;
-        allBookingsFile << "Staying time: " << n->stayTime << endl;
-        allBookingsFile << "Room Category: " << opt2 << endl;
-        allBookingsFile << "Room Number: " << n->roomChoice << endl;
-        allBookingsFile << "Total cost: " << cost << endl;
+            // Write the information to "allbookings.txt"
+            allBookingsFile << "Name of the booker: " << n->name << endl;
+            allBookingsFile << "No. Of individuals: " << n->noInd << endl;
+            allBookingsFile << "NO. of bed to be used: " << n->noBed << endl;
+            allBookingsFile << "Staying time: " << n->stayTime << endl;
+            allBookingsFile << "Room Category: " << opt2 << endl;
+            allBookingsFile << "Room Number: " << n->roomChoice << endl;
+            allBookingsFile << "Total cost: " << cost << endl;
 
-        allBookingsFile << endl;
+            allBookingsFile << endl;
 
-        outFile.close();
-        allBookingsFile.close();
+            outFile.close();
+            allBookingsFile.close();
+        }else if(opt2 == "advance" || opt2 == "Advance"){
+            int cost = x * 750;
+            outFile << "Total cost: " << cost << endl;
+
+            outFile << endl;
+
+            // Write the information to "allbookings.txt"
+            allBookingsFile << "Name of the booker: " << n->name << endl;
+            allBookingsFile << "No. Of individuals: " << n->noInd << endl;
+            allBookingsFile << "NO. of bed to be used: " << n->noBed << endl;
+            allBookingsFile << "Staying time: " << n->stayTime << endl;
+            allBookingsFile << "Room Category: " << opt2 << endl;
+            allBookingsFile << "Room Number: " << n->roomChoice << endl;
+            allBookingsFile << "Total cost: " << cost << endl;
+
+            allBookingsFile << endl;
+
+            outFile.close();
+            allBookingsFile.close();
+        }else if(opt2 == "premium" || opt2 == "Premium"){
+            int cost = x * 1000;
+            outFile << "Total cost: " << cost << endl;
+
+            outFile << endl;
+
+            // Write the information to "allbookings.txt"
+            allBookingsFile << "Name of the booker: " << n->name << endl;
+            allBookingsFile << "No. Of individuals: " << n->noInd << endl;
+            allBookingsFile << "NO. of bed to be used: " << n->noBed << endl;
+            allBookingsFile << "Staying time: " << n->stayTime << endl;
+            allBookingsFile << "Room Category: " << opt2 << endl;
+            allBookingsFile << "Room Number: " << n->roomChoice << endl;
+            allBookingsFile << "Total cost: " << cost << endl;
+
+            allBookingsFile << endl;
+
+            outFile.close();
+            allBookingsFile.close();
+        }
+
     } else {
         cout << "Unable to open file for writing." << endl;
     }
@@ -517,7 +552,6 @@ void receipt() {
         do{
          system("cls");
          regularPanel();
-        for(int i=0; i<limit;i++){
                 std::cout << "\t\t\t\t\tName of the booker: ";
                 std::cin >> name;
                 std::cin.ignore();  // Ignore the newline character
@@ -530,7 +564,6 @@ void receipt() {
 
                 roomPanelReg();
                 InsertNode(noInd, name, noBed, stayTime, roomChoice);
-       }
             flag = false;
             continue;
         }while(flag == true);
@@ -540,7 +573,6 @@ void receipt() {
         do{
          system("cls");
          advancePanel();
-        for(int i=0; i<limit;i++){
                 std::cout << "\t\t\t\t\tName of the booker: ";
                 std::cin >> name;
                 std::cin.ignore();  // Ignore the newline character
@@ -551,9 +583,9 @@ void receipt() {
                 std::cout << "\t\t\t\t\tHow many hours to stay? ";
                 getline(std::cin, stayTime);
 
-                roomPanelReg();
+                roomPanelAdv();
                 InsertNode(noInd, name, noBed, stayTime, roomChoice);
-       }
+
             flag = false;
             continue;
         }while(flag == true);
@@ -564,7 +596,7 @@ void receipt() {
         do{
          system("cls");
          premiumPanel();
-        for(int i=0; i<limit;i++){
+
                 std::cout << "\t\t\t\t\tName of the booker: ";
                 std::cin >> name;
                 std::cin.ignore();  // Ignore the newline character
@@ -575,9 +607,8 @@ void receipt() {
                 std::cout << "\t\t\t\t\tHow many hours to stay? ";
                 getline(std::cin, stayTime);
 
-                roomPanelReg();
+                roomPanelPrem();
                 InsertNode(noInd, name, noBed, stayTime, roomChoice);
-       }
             flag = false;
             continue;
         }while(flag == true);
@@ -603,7 +634,7 @@ void doBooking() {
 
 void deleteBooking() {
     string name;
-    cout << "Enter the name of the booker to delete the booking: ";
+    cout << "\t\t\t\t\t\t\t\tEnter the name of the booker to delete the booking: ";
     cin.ignore();
     getline(cin, name);
 
@@ -614,7 +645,7 @@ void deleteBooking() {
         string fileContent;
         bool bookingFound = false;
         while (getline(inFile, line)) {
-            if (line.find("Name of the booker: " + name) != string::npos) {
+            if (line.find("\t\t\t\t\t\t\t\tName of the booker: " + name) != string::npos) {
                 // Skip the lines corresponding to the booking with the inputted name
                 for (int i = 0; i < 7; i++) {
                     getline(inFile, line);
@@ -633,7 +664,7 @@ void deleteBooking() {
             if (outFile.is_open()) {
                 outFile << fileContent;
                 outFile.close();
-                cout << "Booking for " << name << " has been deleted from 'allbookings.txt'." << endl;
+                cout << "\t\t\t\t\t\t\t\tBooking for " << name << " has been deleted from the database" << endl;
             } else {
                 cout << "Unable to update 'allbookings.txt'." << endl;
             }
@@ -644,7 +675,7 @@ void deleteBooking() {
                 string modifiedContent;
                 bool modifiedBookingFound = false;
                 while (getline(modifiedFile, line)) {
-                    if (line.find("Name of the booker: " + name) != string::npos) {
+                    if (line.find("\t\t\t\t\t\t\t\tName of the booker: " + name) != string::npos) {
                         // Skip the lines corresponding to the modified booking with the inputted name
                         for (int i = 0; i < 3; i++) {
                             getline(modifiedFile, line);
@@ -663,19 +694,19 @@ void deleteBooking() {
                     if (modifiedOutFile.is_open()) {
                         modifiedOutFile << modifiedContent;
                         modifiedOutFile.close();
-                        cout << "Booking modifications for " << name << " have been deleted from 'modified_booking.txt'." << endl;
+                        cout << "\t\t\t\t\t\t\t\tBooking modifications for " << name << " have been deleted from the database" << endl;
                     } else {
-                        cout << "Unable to update 'modified_booking.txt'." << endl;
+                        cout << "\t\t\t\t\t\t\t\tUnable to update 'modified_booking.txt'." << endl;
                     }
                 }
             } else {
-                cout << "Unable to open 'modified_booking.txt' for reading." << endl;
+                cout << "\t\t\t\t\t\t\t\tUnable to open 'modified_booking.txt' for reading." << endl;
             }
         } else {
-            cout << "Booking not found for " << name << "." << endl;
+            cout << "\t\t\t\t\t\t\t\tBooking not found for " << name << "." << endl;
         }
     } else {
-        cout << "Unable to open 'allbookings.txt' for reading." << endl;
+        cout << "\t\t\t\t\t\t\t\tUnable to open 'allbookings.txt' for reading." << endl;
     }
 }
 
@@ -694,15 +725,15 @@ void viewBookings() {
         }
         allBookingsFile.close();
     } else {
-        cout << "Unable to open 'allbookings.txt' for reading." << endl;
+        cout << "\t\t\t\t\t\t\t\tUnable to open 'allbookings.txt' for reading." << endl;
     }
 
-    cout << "Do you want to view modifications made to a booking? [Y/N]: ";
+    cout << "\t\t\t\t\t\t\t\tDo you want to view modifications made to a booking? [Y/N]: ";
     cin >> choice;
 
     if (choice == 'Y' || choice == 'y') {
         string bookerName;
-        cout << "Enter the name of the booker: ";
+        cout << "\t\t\t\t\t\t\t\tEnter the name of the booker: ";
         cin.ignore();
         getline(cin, bookerName);
 
@@ -711,9 +742,9 @@ void viewBookings() {
         if (modifiedFile.is_open()) {
             string line;
             bool bookingFound = false;
-            cout << "\nModifications for " << bookerName << ":\n";
+            cout << "\n\t\t\t\t\t\t\t\tModifications for " << bookerName << ":\n";
             while (getline(modifiedFile, line)) {
-                if (line.find("Name of the booker: " + bookerName) != string::npos) {
+                if (line.find("\t\t\t\t\t\t\t\tName of the booker: " + bookerName) != string::npos) {
                     bookingFound = true;
                     cout << line << endl;
                     // Display the subsequent lines as well
@@ -726,21 +757,21 @@ void viewBookings() {
             modifiedFile.close();
 
             if (!bookingFound) {
-                cout << "No modifications found for " << bookerName << "." << endl;
+                cout << "\t\t\t\t\t\t\t\tNo modifications found for " << bookerName << "." << endl;
             }
         } else {
-            cout << "Unable to open 'modified_booking.txt' for reading." << endl;
+            cout << "\t\t\t\t\t\t\t\tUnable to open 'modified_booking.txt' for reading." << endl;
         }
     }
 
-    cout << "\nDo you want to delete a specific booking? [Y/N]: ";
+    cout << "\n\t\t\t\t\t\t\t\tDo you want to delete a specific booking? [Y/N]: ";
     cin >> choice;
 
     if (choice == 'Y' || choice == 'y') {
         deleteBooking();
     }
 
-    cout << "\nPress any key to go back to the main menu...";
+    cout << "\n\t\t\t\t\t\t\t\tPress any key to go back to the main menu...";
     cin.ignore();
     cin.get();
 }
@@ -752,7 +783,7 @@ void viewBookings() {
 void modifyBooking() {
     system("cls");
     string bookerName;
-    cout << "Enter the name of the booker to modify the booking: ";
+    cout << "\t\t\t\t\t\t\t\tEnter the name of the booker to modify the booking: ";
     cin.ignore();
     getline(cin, bookerName);
 
@@ -766,63 +797,63 @@ void modifyBooking() {
             if (line.find("Name of the booker: " + bookerName) != string::npos) {
                 // Update the specific booking information
                 bookingFound = true;
-                cout << "What information would you like to modify?\n";
-                cout << "1. No. of individuals\n";
-                cout << "2. Name of the booker\n";
-                cout << "3. No. of beds to be used\n";
-                cout << "4. Staying time\n";
-                cout << "5. Room category\n";
-                cout << "6. Room number\n";
-                cout << "Choose an option (1-6): ";
+                cout << "\t\t\t\t\t\t\t\tWhat information would you like to modify?\n";
+                cout << "\t\t\t\t\t\t\t\t1. No. of individuals\n";
+                cout << "\t\t\t\t\t\t\t\t2. Name of the booker\n";
+                cout << "\t\t\t\t\t\t\t\t3. No. of beds to be used\n";
+                cout << "\t\t\t\t\t\t\t\t4. Staying time\n";
+                cout << "\t\t\t\t\t\t\t\t5. Room category\n";
+                cout << "\t\t\t\t\t\t\t\t6. Room number\n";
+                cout << "\t\t\t\t\t\t\t\tChoose an option (1-6): ";
                 int choice;
                 cin >> choice;
                 cin.ignore();
 
                 switch (choice) {
                     case 1: {
-                        cout << "Enter the new value for No. of individuals: ";
+                        cout << "\t\t\t\t\t\t\t\tEnter the new value for No. of individuals: ";
                         string newValue;
                         getline(cin, newValue);
-                        modifiedInfo = "No. Of individuals: " + newValue;
+                        modifiedInfo = "\t\t\t\t\t\t\t\tNo. Of individuals: " + newValue;
                         break;
                     }
                     case 2: {
-                        cout << "Enter the new value for Name of the booker: ";
+                        cout << "\t\t\t\t\t\t\t\tEnter the new value for Name of the booker: ";
                         string newValue;
                         getline(cin, newValue);
-                        modifiedInfo = "Name of the booker: " + newValue;
+                        modifiedInfo = "\t\t\t\t\t\t\t\tName of the booker: " + newValue;
                         break;
                     }
                     case 3: {
-                        cout << "Enter the new value for No. of beds to be used: ";
+                        cout << "\t\t\t\t\t\t\t\tEnter the new value for No. of beds to be used: ";
                         string newValue;
                         getline(cin, newValue);
-                        modifiedInfo = "NO. of bed to be used: " + newValue;
+                        modifiedInfo = "\t\t\t\t\t\t\t\tNO. of bed to be used: " + newValue;
                         break;
                     }
                     case 4: {
-                        cout << "Enter the new value for Staying time: ";
+                        cout << "\t\t\t\t\t\t\t\tEnter the new value for Staying time: ";
                         string newValue;
                         getline(cin, newValue);
-                        modifiedInfo = "Staying time: " + newValue;
+                        modifiedInfo = "\t\t\t\t\t\t\t\tStaying time: " + newValue;
                         break;
                     }
                     case 5: {
-                        cout << "Enter the new value for Room category: ";
+                        cout << "\t\t\t\t\t\t\t\tEnter the new value for Room category: ";
                         string newValue;
                         getline(cin, newValue);
-                        modifiedInfo = "Room Category: " + newValue;
+                        modifiedInfo = "\t\t\t\t\t\t\t\tRoom Category: " + newValue;
                         break;
                     }
                     case 6: {
-                        cout << "Enter the new value for Room number: ";
+                        cout << "\t\t\t\t\t\t\t\tEnter the new value for Room number: ";
                         string newValue;
                         getline(cin, newValue);
-                        modifiedInfo = "Room Number: " + newValue;
+                        modifiedInfo = "\t\t\t\t\t\t\t\tRoom Number: " + newValue;
                         break;
                     }
                     default:
-                        cout << "Invalid choice.\n";
+                        cout << "\t\t\t\t\t\t\t\tInvalid choice.\n";
                         break;
                 }
             }
@@ -833,21 +864,21 @@ void modifyBooking() {
             // Open the "modified_booking.txt" file in append mode
             ofstream outFile("modified_booking.txt", ios::app);
             if (outFile.is_open()) {
-                outFile << "Name of the booker: " << bookerName << endl;
+                outFile << "\t\t\t\t\t\t\t\tName of the booker: " << bookerName << endl;
                 outFile << modifiedInfo << endl << endl;
                 outFile.close();
-                cout << "Modification successful.\n";
+                cout << "\t\t\t\t\t\t\t\tModification successful.\n";
             } else {
-                cout << "Unable to update the modified booking file." << endl;
+                cout << "\t\t\t\t\t\t\t\tUnable to update the modified booking file." << endl;
             }
         } else {
-            cout << "Booking not found for the given name or no modification was made.\n";
+            cout << "\t\t\t\t\t\t\t\tBooking not found for the given name or no modification was made.\n";
         }
     } else {
-        cout << "Unable to open 'allbookings.txt' for reading." << endl;
+        cout << "\t\t\t\t\t\t\t\tUnable to open 'allbookings.txt' for reading." << endl;
     }
 
-    cout << "Press any key to go back to the main menu...";
+    cout << "\t\t\t\t\t\t\t\tPress any key to go back to the main menu...";
     cin.ignore();
     cin.get();
 }
@@ -888,7 +919,7 @@ void giveFeedback(stack<Feedback>& feedbackStack, queue<Feedback>& feedbackQueue
         stackFile << endl;
         stackFile.close();
     } else {
-        cout << "Unable to open 'feedback_stack.txt' for writing." << endl;
+        cout << "\t\t\t\t\t\t\t\tUnable to open 'feedback_stack.txt' for writing." << endl;
     }
 
     ofstream queueFile("feedback_queue.txt");
@@ -904,7 +935,7 @@ void giveFeedback(stack<Feedback>& feedbackStack, queue<Feedback>& feedbackQueue
         }
         queueFile.close();
     } else {
-        cout << "Unable to open 'feedback_queue.txt' for writing." << endl;
+        cout << "\t\t\t\t\t\t\t\tUnable to open 'feedback_queue.txt' for writing." << endl;
     }
 
     cout << "\t\t\t\t\t\t\t\tFeedback submitted successfully!\n";
@@ -927,7 +958,7 @@ void viewFeedbackUsingStack() {
             feedbackStack.pop();
         }
     } else {
-        cout << "Unable to open 'feedback_stack.txt' for reading." << endl;
+        cout << "\t\t\t\t\t\t\t\tUnable to open 'feedback_stack.txt' for reading." << endl;
     }
 }
 
@@ -959,7 +990,7 @@ void viewFeedbackUsingQueue(queue<Feedback>& feedbackQueue) {
             cout << endl;
         }
     } else {
-        cout << "Unable to open 'feedback_queue.txt' for reading." << endl;
+        cout << "\t\t\t\t\t\t\t\tUnable to open 'feedback_queue.txt' for reading." << endl;
     }
 }
 
@@ -991,10 +1022,10 @@ void feedbackSystem() {
                 viewFeedbackUsingQueue(feedbackQueue);
                 break;
             case 4:
-                cout << "Exiting...\n";
+                cout << "\t\t\t\t\t\t\t\tExiting...\n";
                 break;
             default:
-                cout << "Invalid choice. Please try again.\n";
+                cout << "\t\t\t\t\t\t\t\tInvalid choice. Please try again.\n";
                 break;
         }
     } while (choice != 4);
