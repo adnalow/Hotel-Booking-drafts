@@ -1,8 +1,0 @@
-Name of the booker: adrian
-No. Of individuals: 2
-NO. of bed to be used: 3
-Staying time: 6
-Room Category: regular
-Room Number: 1
-Total cost: 2100
-

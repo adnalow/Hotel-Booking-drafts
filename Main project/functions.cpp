@@ -3,6 +3,8 @@
 #include <queue>
 #include <fstream>
 #include <chrono>
+#include <sstream>
+#include <vector>
 using namespace std;
 
 
@@ -645,48 +647,78 @@ void deleteBooking() {
 
 
 
-
-
-
-
 void viewBookings() {
     char choice;
     system("cls");
     cout << "\t\t\t\t\t\t\t\tBookings:\n";
-     // Read and display the contents of "allbookings.txt"
+    // Read and display the contents of "allbookings.txt"
     ifstream allBookingsFile("allbookings.txt");
     if (allBookingsFile.is_open()) {
         string line;
         while (getline(allBookingsFile, line)) {
-            cout <<"\t\t\t\t\t\t\t\t"<< line << endl;
+            cout << "\t\t\t\t\t\t\t\t" << line << endl;
         }
         allBookingsFile.close();
     } else {
         cout << "Unable to open 'allbookings.txt' for reading." << endl;
     }
 
-    cout << "Do you want to delete a specific booking? [Y/N]: ";
+    cout << "Do you want to view modifications made to a booking? [Y/N]: ";
+    cin >> choice;
+
+    if (choice == 'Y' || choice == 'y') {
+        string bookerName;
+        cout << "Enter the name of the booker: ";
+        cin.ignore();
+        getline(cin, bookerName);
+
+        // Open the "modified_booking.txt" file for reading
+        ifstream modifiedFile("modified_booking.txt");
+        if (modifiedFile.is_open()) {
+            string line;
+            bool bookingFound = false;
+            cout << "\nModifications for " << bookerName << ":\n";
+            while (getline(modifiedFile, line)) {
+                if (line.find("Name of the booker: " + bookerName) != string::npos) {
+                    bookingFound = true;
+                    cout << line << endl;
+                    // Display the subsequent lines as well
+                    while (getline(modifiedFile, line) && !line.empty()) {
+                        cout << line << endl;
+                    }
+                    break;
+                }
+            }
+            modifiedFile.close();
+
+            if (!bookingFound) {
+                cout << "No modifications found for " << bookerName << "." << endl;
+            }
+        } else {
+            cout << "Unable to open 'modified_booking.txt' for reading." << endl;
+        }
+    }
+
+    cout << "\nDo you want to delete a specific booking? [Y/N]: ";
     cin >> choice;
 
     if (choice == 'Y' || choice == 'y') {
         deleteBooking();
-        cout << "\n\t\t\t\t\t\t\t\tPress any key to go back to the main menu...";
-        cin.ignore();
-        cin.get();
-    } else {
-        cout << "\n\t\t\t\t\t\t\t\tPress any key to go back to the main menu...";
-        cin.ignore();
-        cin.get();
     }
-    
-   
+
+    cout << "\nPress any key to go back to the main menu...";
+    cin.ignore();
+    cin.get();
 }
+
+
+
 
 
 void modifyBooking() {
     system("cls");
     string bookerName;
-    cout << "\t\t\t\t\t\t\t\tEnter the name of the booker: ";
+    cout << "Enter the name of the booker to modify the booking: ";
     cin.ignore();
     getline(cin, bookerName);
 
@@ -694,101 +726,98 @@ void modifyBooking() {
     ifstream inFile("allbookings.txt");
     if (inFile.is_open()) {
         string line;
-        string fileContent;
+        string modifiedInfo;
         bool bookingFound = false;
         while (getline(inFile, line)) {
             if (line.find("Name of the booker: " + bookerName) != string::npos) {
-                // Modify the specific booking information
+                // Update the specific booking information
                 bookingFound = true;
-                fileContent += line + "\n";
-                getline(inFile, line); // Read the No. Of individuals line
-                cout << "\t\t\t\t\t\t\t\tWhat information would you like to modify?\n";
-                cout << "\t\t\t\t\t\t\t\t1. Name of the booker\n";
-                cout << "\t\t\t\t\t\t\t\t2. No. of individuals\n";
-                cout << "\t\t\t\t\t\t\t\t3. No. of beds to be used\n";
-                cout << "\t\t\t\t\t\t\t\t4. Staying time\n";
-                cout << "\t\t\t\t\t\t\t\t5. Room category\n";
-                cout << "\t\t\t\t\t\t\t\t6. Room number\n";
-                cout << "\t\t\t\t\t\t\t\tChoose an option (1-6): ";
+                cout << "What information would you like to modify?\n";
+                cout << "1. No. of individuals\n";
+                cout << "2. Name of the booker\n";
+                cout << "3. No. of beds to be used\n";
+                cout << "4. Staying time\n";
+                cout << "5. Room category\n";
+                cout << "6. Room number\n";
+                cout << "Choose an option (1-6): ";
                 int choice;
                 cin >> choice;
                 cin.ignore();
 
                 switch (choice) {
                     case 1: {
-                        cout << "\t\t\t\t\t\t\t\tEnter the new value for Name of the booker: ";
+                        cout << "Enter the new value for No. of individuals: ";
                         string newValue;
                         getline(cin, newValue);
-                        fileContent += "Name of the booker: " + newValue + "\n";
+                        modifiedInfo = "No. Of individuals: " + newValue;
                         break;
-                        
                     }
                     case 2: {
-                        cout << "\t\t\t\t\t\t\t\tEnter the new value for No. of individuals: ";
+                        cout << "Enter the new value for Name of the booker: ";
                         string newValue;
                         getline(cin, newValue);
-                        fileContent += "No. Of individuals: " + newValue + "\n";
+                        modifiedInfo = "Name of the booker: " + newValue;
                         break;
                     }
                     case 3: {
-                        cout << "\t\t\t\t\t\t\t\tEnter the new value for No. of beds to be used: ";
+                        cout << "Enter the new value for No. of beds to be used: ";
                         string newValue;
                         getline(cin, newValue);
-                        fileContent += "NO. of bed to be used: " + newValue + "\n";
+                        modifiedInfo = "NO. of bed to be used: " + newValue;
                         break;
                     }
                     case 4: {
-                        cout << "\t\t\t\t\t\t\t\tEnter the new value for Staying time: ";
+                        cout << "Enter the new value for Staying time: ";
                         string newValue;
                         getline(cin, newValue);
-                        fileContent += "Staying time: " + newValue + "\n";
+                        modifiedInfo = "Staying time: " + newValue;
                         break;
                     }
                     case 5: {
-                        cout << "\t\t\t\t\t\t\t\tEnter the new value for Room category: ";
+                        cout << "Enter the new value for Room category: ";
                         string newValue;
                         getline(cin, newValue);
-                        fileContent += "Room Category: " + newValue + "\n";
+                        modifiedInfo = "Room Category: " + newValue;
                         break;
                     }
                     case 6: {
-                        cout << "\t\t\t\t\t\t\t\tEnter the new value for Room number: ";
+                        cout << "Enter the new value for Room number: ";
                         string newValue;
                         getline(cin, newValue);
-                        fileContent += "Room Number: " + newValue + "\n";
+                        modifiedInfo = "Room Number: " + newValue;
                         break;
                     }
                     default:
-                        cout << "\t\t\t\t\t\t\t\tInvalid choice.\n";
+                        cout << "Invalid choice.\n";
                         break;
                 }
-            } else {
-                fileContent += line + "\n";
             }
         }
         inFile.close();
 
-        if (bookingFound) {
-            // Rewrite the "allbookings.txt" file with the updated content
-            ofstream outFile("allbookings.txt");
+        if (bookingFound && !modifiedInfo.empty()) {
+            // Open the "modified_booking.txt" file in append mode
+            ofstream outFile("modified_booking.txt", ios::app);
             if (outFile.is_open()) {
-                outFile << fileContent;
+                outFile << "Name of the booker: " << bookerName << endl;
+                outFile << modifiedInfo << endl << endl;
                 outFile.close();
-                cout << "\t\t\t\t\t\t\t\tModification successful.\n";
+                cout << "Modification successful.\n";
             } else {
-                cout << "Unable to update 'allbookings.txt'." << endl;
+                cout << "Unable to update the modified booking file." << endl;
             }
         } else {
-            cout << "\t\t\t\t\t\t\t\tBooking not found for the given name.\n";
+            cout << "Booking not found for the given name or no modification was made.\n";
         }
     } else {
         cout << "Unable to open 'allbookings.txt' for reading." << endl;
     }
 
-    cout << "\t\t\t\t\t\t\t\tPress any key to go back to the main menu...";
+    cout << "Press any key to go back to the main menu...";
     cin.ignore();
     cin.get();
 }
+
 
 
 
