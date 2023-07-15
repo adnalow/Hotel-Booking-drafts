@@ -633,9 +633,43 @@ void deleteBooking() {
             if (outFile.is_open()) {
                 outFile << fileContent;
                 outFile.close();
-                cout << "Booking for " << name << " has been deleted." << endl;
+                cout << "Booking for " << name << " has been deleted from 'allbookings.txt'." << endl;
             } else {
                 cout << "Unable to update 'allbookings.txt'." << endl;
+            }
+
+            // Open the "modified_booking.txt" file for reading
+            ifstream modifiedFile("modified_booking.txt");
+            if (modifiedFile.is_open()) {
+                string modifiedContent;
+                bool modifiedBookingFound = false;
+                while (getline(modifiedFile, line)) {
+                    if (line.find("Name of the booker: " + name) != string::npos) {
+                        // Skip the lines corresponding to the modified booking with the inputted name
+                        for (int i = 0; i < 3; i++) {
+                            getline(modifiedFile, line);
+                        }
+                        modifiedBookingFound = true;
+                    } else {
+                        // Append the lines to the updated modified booking content
+                        modifiedContent += line + "\n";
+                    }
+                }
+                modifiedFile.close();
+
+                if (modifiedBookingFound) {
+                    // Rewrite the "modified_booking.txt" file with the updated content
+                    ofstream modifiedOutFile("modified_booking.txt");
+                    if (modifiedOutFile.is_open()) {
+                        modifiedOutFile << modifiedContent;
+                        modifiedOutFile.close();
+                        cout << "Booking modifications for " << name << " have been deleted from 'modified_booking.txt'." << endl;
+                    } else {
+                        cout << "Unable to update 'modified_booking.txt'." << endl;
+                    }
+                }
+            } else {
+                cout << "Unable to open 'modified_booking.txt' for reading." << endl;
             }
         } else {
             cout << "Booking not found for " << name << "." << endl;
