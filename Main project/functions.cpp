@@ -931,37 +931,38 @@ void viewFeedbackUsingStack() {
     }
 }
 
-// Function to view feedback using a queue
-void viewFeedbackUsingQueue() {
+void viewFeedbackUsingQueue(queue<Feedback>& feedbackQueue) {
     cout << "\t\t\t\t\t\t\t\tFeedbacks (First to Last):\n";
-    ifstream queueFile("feedback_queue.txt");
-    if (queueFile.is_open()) {
-        queue<Feedback> feedbackQueue;
+
+    // Read the existing feedback from the file and store it in a temporary queue
+    queue<Feedback> tempQueue;
+    ifstream inFile("feedback_queue.txt");
+    if (inFile.is_open()) {
         string line;
-        while (getline(queueFile, line)) {
-            Feedback currentFeedback;
+        Feedback tempFeedback;
+        while (getline(inFile, line)) {
             if (line.find("User: ") != string::npos) {
-                currentFeedback.user = line.substr(6);
-                getline(queueFile, line);
-                if (line.find("Comment: ") != string::npos) {
-                    currentFeedback.comment = line.substr(9);
-                    feedbackQueue.push(currentFeedback);
-                }
+                tempFeedback.user = line.substr(6);
+            } else if (line.find("Comment: ") != string::npos) {
+                tempFeedback.comment = line.substr(9);
+                tempQueue.push(tempFeedback);
             }
         }
-        queueFile.close();
+        inFile.close();
 
-        while (!feedbackQueue.empty()) {
-            Feedback currentFeedback = feedbackQueue.front();
+        // Display the feedbacks from the temporary queue (first to last order)
+        while (!tempQueue.empty()) {
+            Feedback currentFeedback = tempQueue.front();
+            tempQueue.pop();
             cout << "\t\t\t\t\t\t\t\tUser: " << currentFeedback.user << endl;
             cout << "\t\t\t\t\t\t\t\tComment: " << currentFeedback.comment << endl;
             cout << endl;
-            feedbackQueue.pop();
         }
     } else {
         cout << "Unable to open 'feedback_queue.txt' for reading." << endl;
     }
 }
+
 
 void feedbackSystem() {
     stack<Feedback> feedbackStack;
@@ -987,7 +988,7 @@ void feedbackSystem() {
                 viewFeedbackUsingStack();
                 break;
             case 3:
-                viewFeedbackUsingQueue();
+                viewFeedbackUsingQueue(feedbackQueue);
                 break;
             case 4:
                 cout << "Exiting...\n";
@@ -998,3 +999,4 @@ void feedbackSystem() {
         }
     } while (choice != 4);
 }
+
