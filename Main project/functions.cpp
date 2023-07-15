@@ -854,51 +854,112 @@ void modifyBooking() {
 
 
 
-
-
-struct Feedback {
+class Feedback {
+public:
     string user;
     string comment;
+
+    // Default constructor
+    Feedback() : user(""), comment("") {}
+
+    // Parameterized constructor
+    Feedback(const string& user, const string& comment) : user(user), comment(comment) {}
 };
 
 // Function to allow the user to give feedback
 void giveFeedback(stack<Feedback>& feedbackStack, queue<Feedback>& feedbackQueue) {
-    Feedback newFeedback;
     cin.ignore();
     cout << "\t\t\t\t\t\t\t\tEnter your name: ";
-    getline(cin, newFeedback.user);
+    string user;
+    getline(cin, user);
     cout << "\t\t\t\t\t\t\t\tEnter your comment: ";
-    getline(cin, newFeedback.comment);
+    string comment;
+    getline(cin, comment);
+
+    Feedback newFeedback(user, comment);
 
     feedbackStack.push(newFeedback);
     feedbackQueue.push(newFeedback);
+
+    ofstream stackFile("feedback_stack.txt", ios::app);
+    if (stackFile.is_open()) {
+        stackFile << "User: " << newFeedback.user << endl;
+        stackFile << "Comment: " << newFeedback.comment << endl;
+        stackFile << endl;
+        stackFile.close();
+    } else {
+        cout << "Unable to open 'feedback_stack.txt' for writing." << endl;
+    }
+
+    ofstream queueFile("feedback_queue.txt");
+    if (queueFile.is_open()) {
+        queue<Feedback> tempQueue = feedbackQueue;
+
+        while (!tempQueue.empty()) {
+            Feedback currentFeedback = tempQueue.front();
+            queueFile << "User: " << currentFeedback.user << endl;
+            queueFile << "Comment: " << currentFeedback.comment << endl;
+            queueFile << endl;
+            tempQueue.pop();
+        }
+        queueFile.close();
+    } else {
+        cout << "Unable to open 'feedback_queue.txt' for writing." << endl;
+    }
 
     cout << "\t\t\t\t\t\t\t\tFeedback submitted successfully!\n";
 }
 
 // Function to view feedback using a stack
-void viewFeedbackUsingStack(stack<Feedback>& feedbackStack) {
+void viewFeedbackUsingStack() {
     cout << "\t\t\t\t\t\t\t\tFeedbacks (Last to First):\n";
-    stack<Feedback> tempStack = feedbackStack;
-    while (!tempStack.empty()) {
-        Feedback currentFeedback = tempStack.top();
-        tempStack.pop();
-        cout << "\t\t\t\t\t\t\t\tUser: " << currentFeedback.user << endl;
-        cout << "\t\t\t\t\t\t\t\tComment: " << currentFeedback.comment << endl;
-        cout << endl;
+    ifstream stackFile("feedback_stack.txt");
+    if (stackFile.is_open()) {
+        stack<string> feedbackStack;
+        string line;
+        while (getline(stackFile, line)) {
+            feedbackStack.push(line);
+        }
+        stackFile.close();
+
+        while (!feedbackStack.empty()) {
+            cout << "\t\t\t\t\t\t\t\t" << feedbackStack.top() << endl;
+            feedbackStack.pop();
+        }
+    } else {
+        cout << "Unable to open 'feedback_stack.txt' for reading." << endl;
     }
 }
 
 // Function to view feedback using a queue
-void viewFeedbackUsingQueue(queue<Feedback>& feedbackQueue) {
+void viewFeedbackUsingQueue() {
     cout << "\t\t\t\t\t\t\t\tFeedbacks (First to Last):\n";
-    queue<Feedback> tempQueue = feedbackQueue;
-    while (!tempQueue.empty()) {
-        Feedback currentFeedback = tempQueue.front();
-        tempQueue.pop();
-        cout << "\t\t\t\t\t\t\t\tUser: " << currentFeedback.user << endl;
-        cout << "\t\t\t\t\t\t\t\tComment: " << currentFeedback.comment << endl;
-        cout << endl;
+    ifstream queueFile("feedback_queue.txt");
+    if (queueFile.is_open()) {
+        queue<Feedback> feedbackQueue;
+        string line;
+        while (getline(queueFile, line)) {
+            Feedback currentFeedback;
+            if (line.find("User: ") != string::npos) {
+                currentFeedback.user = line.substr(6);
+                getline(queueFile, line);
+                if (line.find("Comment: ") != string::npos) {
+                    currentFeedback.comment = line.substr(9);
+                    feedbackQueue.push(currentFeedback);
+                }
+            }
+        }
+        queueFile.close();
+
+        while (!feedbackQueue.empty()) {
+            Feedback currentFeedback = feedbackQueue.front();
+            cout << "\t\t\t\t\t\t\t\tUser: " << currentFeedback.user << endl;
+            cout << "\t\t\t\t\t\t\t\tComment: " << currentFeedback.comment << endl;
+            cout << endl;
+            feedbackQueue.pop();
+        }
+    } else {
+        cout << "Unable to open 'feedback_queue.txt' for reading." << endl;
     }
 }
 
@@ -923,10 +984,10 @@ void feedbackSystem() {
                 giveFeedback(feedbackStack, feedbackQueue);
                 break;
             case 2:
-                viewFeedbackUsingStack(feedbackStack);
+                viewFeedbackUsingStack();
                 break;
             case 3:
-                viewFeedbackUsingQueue(feedbackQueue);
+                viewFeedbackUsingQueue();
                 break;
             case 4:
                 cout << "Exiting...\n";
