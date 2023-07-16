@@ -4,16 +4,10 @@
 #include <fstream>
 #include <chrono>
 #include <sstream>
-#include <vector>
 using namespace std;
 
 string opt2;
 string roomChoice;
-
-class room {
-public:
-    string type;
-};
 
 
 void db1(){
@@ -359,17 +353,6 @@ void InsertNode(string noInd, string name, string noBed, string stayTime, string
     }
 }
 
-void storeItemsToArray(std::string* items, int size) {
-    Node* curr = head;
-    int index = 0;
-
-    while (curr != nullptr && index < size) {
-        items[index] = curr->name;
-        curr = curr->next;
-        index++;
-    }
-
-}
 
 bool isRoomAvailable(string roomChoice) {
     Node* curr = head;
@@ -645,9 +628,9 @@ void deleteBooking() {
         string fileContent;
         bool bookingFound = false;
         while (getline(inFile, line)) {
-            if (line.find("\t\t\t\t\t\t\t\tName of the booker: " + name) != string::npos) {
+            if (line.find("Name of the booker: " + name) != string::npos) {
                 // Skip the lines corresponding to the booking with the inputted name
-                for (int i = 0; i < 7; i++) {
+                for (int i = 0; i < 6; i++) {
                     getline(inFile, line);
                 }
                 bookingFound = true;
@@ -668,45 +651,46 @@ void deleteBooking() {
             } else {
                 cout << "Unable to update 'allbookings.txt'." << endl;
             }
-
-            // Open the "modified_booking.txt" file for reading
-            ifstream modifiedFile("modified_booking.txt");
-            if (modifiedFile.is_open()) {
-                string modifiedContent;
-                bool modifiedBookingFound = false;
-                while (getline(modifiedFile, line)) {
-                    if (line.find("\t\t\t\t\t\t\t\tName of the booker: " + name) != string::npos) {
-                        // Skip the lines corresponding to the modified booking with the inputted name
-                        for (int i = 0; i < 3; i++) {
-                            getline(modifiedFile, line);
-                        }
-                        modifiedBookingFound = true;
-                    } else {
-                        // Append the lines to the updated modified booking content
-                        modifiedContent += line + "\n";
-                    }
-                }
-                modifiedFile.close();
-
-                if (modifiedBookingFound) {
-                    // Rewrite the "modified_booking.txt" file with the updated content
-                    ofstream modifiedOutFile("modified_booking.txt");
-                    if (modifiedOutFile.is_open()) {
-                        modifiedOutFile << modifiedContent;
-                        modifiedOutFile.close();
-                        cout << "\t\t\t\t\t\t\t\tBooking modifications for " << name << " have been deleted from the database" << endl;
-                    } else {
-                        cout << "\t\t\t\t\t\t\t\tUnable to update 'modified_booking.txt'." << endl;
-                    }
-                }
-            } else {
-                cout << "\t\t\t\t\t\t\t\tUnable to open 'modified_booking.txt' for reading." << endl;
-            }
         } else {
             cout << "\t\t\t\t\t\t\t\tBooking not found for " << name << "." << endl;
         }
     } else {
         cout << "\t\t\t\t\t\t\t\tUnable to open 'allbookings.txt' for reading." << endl;
+    }
+
+    // Open the "modified_booking.txt" file for reading
+    ifstream modifiedFile("modified_booking.txt");
+    if (modifiedFile.is_open()) {
+        string line;
+        string modifiedContent;
+        bool modifiedBookingFound = false;
+        while (getline(modifiedFile, line)) {
+            if (line.find("Name of the booker: " + name) != string::npos) {
+                // Skip the lines corresponding to the modified booking with the inputted name
+                for (int i = 0; i < 2; i++) {
+                    getline(modifiedFile, line);
+                }
+                modifiedBookingFound = true;
+            } else {
+                // Append the lines to the updated modified booking content
+                modifiedContent += line + "\n";
+            }
+        }
+        modifiedFile.close();
+
+        if (modifiedBookingFound) {
+            // Rewrite the "modified_booking.txt" file with the updated content
+            ofstream modifiedOutFile("modified_booking.txt");
+            if (modifiedOutFile.is_open()) {
+                modifiedOutFile << modifiedContent;
+                modifiedOutFile.close();
+                cout << "\t\t\t\t\t\t\t\tBooking modifications for " << name << " have been deleted from the database" << endl;
+            } else {
+                cout << "\t\t\t\t\t\t\t\tUnable to update 'modified_booking.txt'." << endl;
+            }
+        }
+    } else {
+        cout << "\t\t\t\t\t\t\t\tUnable to open 'modified_booking.txt' for reading." << endl;
     }
 }
 
