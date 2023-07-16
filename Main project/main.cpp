@@ -3,6 +3,7 @@
 #include <queue>
 #include "fpage.cpp"
 #include "mMenu.cpp"
+#include "ePage.cpp"
 #include "functions.cpp"
 #include <fstream>
 #include <chrono>
@@ -36,6 +37,10 @@ int main() {
             case '4':
                 feedbackSystem();
                 break;
+            case '5':
+                 system("cls");
+                 ePage();
+                 return 0;
             default:
                 break;
         }
